@@ -1,0 +1,12 @@
+{
+  "name": "tnt",
+  "version": "1.0.0",
+  "main": "main.js",
+  "repository": "git@github.com:skylerlee/tnt.git",
+  "author": "skylerlee <skyler.ac.lee@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
