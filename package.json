@@ -6,7 +6,12 @@
   "author": "skylerlee <skyler.ac.lee@gmail.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "build": "parcel build src/index.ts"
+  },
   "devDependencies": {
+    "@electron/asar": "^3.2.9",
+    "electron": "^25.9.8",
     "parcel": "^2.12.0"
   }
 }
