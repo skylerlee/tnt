@@ -16,7 +16,8 @@
     }
   },
   "scripts": {
-    "build": "parcel build"
+    "build": "parcel build",
+    "start": "electron dist/main"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.6.3",
