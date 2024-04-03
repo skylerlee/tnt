@@ -7,9 +7,11 @@
   "private": true,
   "targets": {
     "renderer": {
+      "context": "electron-renderer",
       "source": "src/renderer/index.html"
     },
     "main": {
+      "context": "electron-main",
       "source": "src/main/index.ts"
     }
   },
