@@ -29,4 +29,4 @@ function main() {
   });
 }
 
-console.log(import.meta);
+main();
