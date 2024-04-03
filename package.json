@@ -19,6 +19,7 @@
     "build": "parcel build"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.6.3",
     "@electron/asar": "^3.2.9",
     "electron": "^25.9.8",
     "parcel": "^2.12.0"
