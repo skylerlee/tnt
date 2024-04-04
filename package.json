@@ -9,11 +9,13 @@
     "renderer": {
       "context": "electron-renderer",
       "source": "src/renderer/index.html",
+      "distDir": "dist/renderer",
       "publicUrl": "."
     },
     "main": {
       "context": "electron-main",
-      "source": "src/main/index.ts"
+      "source": "src/main/index.ts",
+      "distDir": "dist/main"
     }
   },
   "scripts": {
