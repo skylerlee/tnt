@@ -17,6 +17,7 @@
   },
   "scripts": {
     "build": "parcel build",
+    "build:asar": "asar pack dist app.asar",
     "start": "electron dist/main"
   },
   "devDependencies": {
