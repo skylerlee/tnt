@@ -8,7 +8,8 @@
   "targets": {
     "renderer": {
       "context": "electron-renderer",
-      "source": "src/renderer/index.html"
+      "source": "src/renderer/index.html",
+      "publicUrl": "."
     },
     "main": {
       "context": "electron-main",
