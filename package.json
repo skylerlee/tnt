@@ -14,8 +14,7 @@
     },
     "main": {
       "context": "electron-main",
-      "source": "src/main/index.ts",
-      "distDir": "dist/main"
+      "source": "src/main/index.ts"
     }
   },
   "scripts": {
