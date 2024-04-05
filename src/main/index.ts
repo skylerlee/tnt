@@ -1,3 +1,4 @@
+import * as path from 'node:path';
 import { BrowserWindow, app } from 'electron';
 
 function createWindow() {
@@ -8,7 +9,9 @@ function createWindow() {
       // preload: path.join(__dirname, 'preload.js')
     },
   });
-  win.loadFile('index.html');
+  const appPath = app.getAppPath();
+  console.log(appPath);
+  win.loadFile(path.resolve(appPath, '..', 'renderer', 'index.html'));
 }
 
 function main() {
