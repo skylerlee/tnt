@@ -8,6 +8,7 @@
   "targets": {
     "renderer": {
       "context": "electron-renderer",
+      "includeNodeModules": true,
       "source": "src/renderer/index.html",
       "distDir": "dist/renderer",
       "publicUrl": "."
@@ -21,6 +22,9 @@
     "build": "parcel build",
     "build:asar": "asar pack dist out/app.asar",
     "start": "electron dist"
+  },
+  "dependencies": {
+    "@xterm/xterm": "^5.5.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.6.3",
