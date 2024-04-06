@@ -18,10 +18,13 @@ const packageGenerator = new Reporter({
       if (targets.length === 0) {
         console.error('Error: package-generator: cannot find "electron-main" target');
       } else {
-        const distDir = targets[0].distDir;
+        const distDir = path.dirname(targets[0].distDir);
         const packageSrc = JSON.parse(packageFile);
         const packageOut = {};
         copyProps(packageOut, packageSrc, ['name', 'version', 'repository', 'author', 'license']);
+        Object.assign(packageOut, {
+          main: 'main/index.js',
+        });
         fs.writeFileSync(path.join(distDir, 'package.json'), JSON.stringify(packageOut, null, 2));
       }
     }

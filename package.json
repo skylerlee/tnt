@@ -5,6 +5,7 @@
   "author": "skylerlee <skyler.ac.lee@gmail.com>",
   "license": "MIT",
   "private": true,
+  "main": "dist/main/index.js",
   "targets": {
     "renderer": {
       "context": "electron-renderer",
