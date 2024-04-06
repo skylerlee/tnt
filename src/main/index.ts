@@ -11,7 +11,7 @@ function createWindow() {
   });
   const appPath = app.getAppPath();
   console.log(appPath);
-  win.loadFile(path.resolve(appPath, '..', 'renderer', 'index.html'));
+  win.loadFile(path.resolve(appPath, 'renderer', 'index.html'));
 }
 
 function main() {
