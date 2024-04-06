@@ -5,13 +5,16 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    show: false,
     webPreferences: {
       // preload: path.join(__dirname, 'preload.js')
     },
   });
   const appPath = app.getAppPath();
-  console.log(appPath);
   win.loadFile(path.resolve(appPath, 'renderer', 'index.html'));
+  win.once('ready-to-show', () => {
+    win.show();
+  });
 }
 
 function main() {
