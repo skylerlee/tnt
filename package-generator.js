@@ -1,6 +1,6 @@
-import * as fs from 'node:fs';
-import * as path from 'node:path';
-import { Reporter } from '@parcel/plugin';
+const fs = require('node:fs');
+const path = require('node:path');
+const { Reporter } = require('@parcel/plugin');
 
 const packageGenerator = new Reporter({
   async report({ event, options }) {
@@ -21,10 +21,19 @@ const packageGenerator = new Reporter({
         const distDir = targets[0].distDir;
         const packageSrc = JSON.parse(packageFile);
         const packageOut = {};
+        copyProps(packageOut, packageSrc, ['name', 'version', 'repository', 'author', 'license']);
         fs.writeFileSync(path.join(distDir, 'package.json'), JSON.stringify(packageOut, null, 2));
       }
     }
   },
 });
 
-export default packageGenerator;
+const copyProps = (tgt, src, propNames) => {
+  for (const propName of propNames) {
+    if (Object.hasOwn(src, propName)) {
+      tgt[propName] = src[propName];
+    }
+  }
+};
+
+module.exports = packageGenerator;

@@ -1,4 +1,4 @@
 {
   "extends": "@parcel/config-default",
-  "reporters": ["...", "./package-generator.mjs"]
+  "reporters": ["...", "./package-generator.js"]
 }
