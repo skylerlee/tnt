@@ -13,10 +13,11 @@ const App = () => {
 
 window.mountApp = () => {
   const root = document.getElementById('root');
-  if (!root) {
+  if (root) {
+    render(App, root);
+  } else {
     console.error('root element not found');
   }
-  render(App, root);
 };
 
 declare global {
