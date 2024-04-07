@@ -2,7 +2,7 @@ import { defineConfig, presetUno } from 'unocss';
 
 export default defineConfig({
   content: {
-    filesystem: ['**/*.{jsx,tsx}'],
+    filesystem: ['./src/**/*.{jsx,tsx}'],
   },
   presets: [presetUno()],
 });
