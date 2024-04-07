@@ -9,5 +9,16 @@ const App = () => {
   );
 };
 
-const root = document.getElementById('root');
-render(App, root);
+window.mountApp = () => {
+  const root = document.getElementById('root');
+  if (!root) {
+    console.error('root element not found');
+  }
+  render(App, root);
+};
+
+declare global {
+  interface Window {
+    mountApp: () => void;
+  }
+}
