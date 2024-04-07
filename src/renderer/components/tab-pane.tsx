@@ -20,13 +20,13 @@ const TabList = (props: { tabs: ITab[] }) => {
 
 const TabArea = (props: { children: JSXElement }) => {
   const { children } = props;
-  return <div class="tab-area">{children}</div>;
+  return <div class="tab-area flex-1">{children}</div>;
 };
 
 const TabPane: Component<IProps> = (props) => {
   const { tabs = [], children } = props;
   return (
-    <div class="tab-pane">
+    <div class="tab-pane flex flex-col">
       <TabList tabs={tabs} />
       <TabArea>{children}</TabArea>
     </div>
