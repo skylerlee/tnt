@@ -1,10 +1,10 @@
 import { render } from 'solid-js/web';
-import TabArea from './components/tab-area';
+import TabPane from './components/tab-pane';
 
 const App = () => {
   return (
     <>
-      <TabArea />
+      <TabPane />
     </>
   );
 };
