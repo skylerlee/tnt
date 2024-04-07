@@ -4,7 +4,9 @@ import TabPane from './components/tab-pane';
 const App = () => {
   return (
     <>
-      <TabPane />
+      <TabPane tabs={[]}>
+        <div>Hello world</div>
+      </TabPane>
     </>
   );
 };

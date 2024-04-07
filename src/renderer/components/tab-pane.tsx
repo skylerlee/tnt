@@ -1,12 +1,14 @@
-import type { Component } from 'solid-js';
+import type { Component, JSXElement } from 'solid-js';
 
 interface ITab {
   title: string;
   closable?: boolean;
 }
 
-const TabList: Component = (props: { tabs: ITab[] }) => {
-  const { tabs = [] } = props;
+type IProps = { tabs: ITab[]; children: JSXElement };
+
+const TabList = (props: { tabs: ITab[] }) => {
+  const { tabs } = props;
   return (
     <div>
       {tabs.map((tab) => (
@@ -16,16 +18,17 @@ const TabList: Component = (props: { tabs: ITab[] }) => {
   );
 };
 
-const TabArea: Component = (props: { children: Element }) => {
+const TabArea = (props: { children: JSXElement }) => {
   const { children } = props;
   return <div class="tab-area">{children}</div>;
 };
 
-const TabPane: Component = (props: { tabs: ITab[] }) => {
+const TabPane: Component<IProps> = (props) => {
+  const { tabs = [], children } = props;
   return (
     <div>
-      <TabList />
-      <TabArea />
+      <TabList tabs={tabs} />
+      <TabArea>{children}</TabArea>
     </div>
   );
 };
