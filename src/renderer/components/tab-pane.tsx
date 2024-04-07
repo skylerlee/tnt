@@ -5,7 +5,7 @@ interface ITab {
   closable?: boolean;
 }
 
-type IProps = { tabs: ITab[]; children: JSXElement };
+type IProps = { tabs: ITab[]; children?: JSXElement };
 
 const TabList = (props: { tabs: ITab[] }) => {
   const { tabs } = props;
@@ -26,7 +26,7 @@ const TabArea = (props: { children: JSXElement }) => {
 const TabPane: Component<IProps> = (props) => {
   const { tabs = [], children } = props;
   return (
-    <div>
+    <div class="tab-pane">
       <TabList tabs={tabs} />
       <TabArea>{children}</TabArea>
     </div>

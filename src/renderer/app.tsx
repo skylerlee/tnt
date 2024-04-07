@@ -3,11 +3,11 @@ import TabPane from './components/tab-pane';
 
 const App = () => {
   return (
-    <>
+    <div class="app flex flex-col">
       <TabPane tabs={[]}>
         <div>Hello world</div>
       </TabPane>
-    </>
+    </div>
   );
 };
 
