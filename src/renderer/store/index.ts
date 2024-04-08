@@ -19,6 +19,9 @@ const setActiveTabId = (tabId) => {
   setState(
     produce((state) => {
       state.activeTabId = tabId;
+      for (const tab of state.tabs) {
+        tab.active = tab.id === tabId;
+      }
     }),
   );
 };

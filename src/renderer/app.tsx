@@ -4,7 +4,7 @@ import { addTab, setActiveTabId, state } from './store';
 
 const App = () => {
   const handleAddTab = () => {
-    addTab({ title: 'Hello world' });
+    addTab({ id: Date.now(), title: 'Hello world' });
   };
 
   const handleAddTabByKeyPress = () => {};
