@@ -4,6 +4,7 @@ import type { Component, JSXElement } from 'solid-js';
 interface ITab {
   id: number;
   title: string;
+  active?: boolean;
   closable?: boolean;
 }
 

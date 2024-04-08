@@ -1,6 +1,16 @@
 import { createStore, produce } from 'solid-js/store';
 
-const [state, setState] = createStore({
+interface ITabModel {
+  id: number;
+  title: string;
+  active?: boolean;
+  closable?: boolean;
+}
+
+const [state, setState] = createStore<{
+  activeTabId?: number;
+  tabs: ITabModel[];
+}>({
   activeTabId: undefined,
   tabs: [],
 });
