@@ -1,3 +1,4 @@
+import { For, mergeProps } from 'solid-js';
 import type { Component, JSXElement } from 'solid-js';
 
 interface ITab {
@@ -8,12 +9,9 @@ interface ITab {
 type IProps = { tabs: ITab[]; children?: JSXElement };
 
 const TabList = (props: { tabs: ITab[] }) => {
-  const { tabs } = props;
   return (
-    <div>
-      {tabs.map((tab) => (
-        <div>{tab.title}</div>
-      ))}
+    <div class="tab-list flex flex-row">
+      <For each={props.tabs}>{(tab) => <div class="tab bg-dark c-light">{tab.title}</div>}</For>
     </div>
   );
 };
@@ -24,11 +22,11 @@ const TabArea = (props: { children: JSXElement }) => {
 };
 
 const TabPane: Component<IProps> = (props) => {
-  const { tabs = [], children } = props;
+  const merged = mergeProps({ tabs: [] }, props);
   return (
     <div class="tab-pane flex flex-col">
-      <TabList tabs={tabs} />
-      <TabArea>{children}</TabArea>
+      <TabList tabs={merged.tabs} />
+      <TabArea>{merged.children}</TabArea>
     </div>
   );
 };
