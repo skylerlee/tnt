@@ -5,6 +5,14 @@ const [state, setState] = createStore({
   tabs: [],
 });
 
+const setActiveTabId = (tabId) => {
+  setState(
+    produce((state) => {
+      state.activeTabId = tabId;
+    }),
+  );
+};
+
 const addTab = (tab) => {
   setState(
     produce((state) => {
@@ -13,4 +21,4 @@ const addTab = (tab) => {
   );
 };
 
-export { state, addTab };
+export { state, setActiveTabId, addTab };
