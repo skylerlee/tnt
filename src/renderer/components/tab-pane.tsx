@@ -22,7 +22,9 @@ const TabList = (props: { tabs: ITab[]; onTabClick: (tab: ITab) => void }) => {
           >
             <span>{tab.title}</span>
             <Show when={!tab.disabled}>
-              <div class="tab-close border-rd codicon codicon-close" />
+              <div class="tab-close flex justify-center items-center w-5 h-5 border-rd">
+                <span class="codicon codicon-close" />
+              </div>
             </Show>
           </div>
         )}
