@@ -24,6 +24,7 @@
     "start": "electron dist"
   },
   "dependencies": {
+    "@vscode/codicons": "^0.0.35",
     "@xterm/xterm": "^5.5.0",
     "solid-js": "^1.8.16"
   },

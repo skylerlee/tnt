@@ -16,13 +16,13 @@ const TabList = (props: { tabs: ITab[]; onTabClick: (tab: ITab) => void }) => {
       <For each={props.tabs}>
         {(tab) => (
           <div
-            classList={{ 'tab p-3 bg-dark c-light': true, 'active bg-neutral': tab.active }}
+            classList={{ 'tab p-3 bg-neutral c-light': true, 'active bg-dark': tab.active }}
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}
           >
             <span>{tab.title}</span>
             <Show when={!tab.disabled}>
-              <div class="tab-close border-rd">x</div>
+              <div class="tab-close border-rd codicon codicon-close" />
             </Show>
           </div>
         )}

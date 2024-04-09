@@ -1599,6 +1599,11 @@
     fast-glob "^3.3.2"
     magic-string "^0.30.9"
 
+"@vscode/codicons@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.npmmirror.com/@vscode/codicons/-/codicons-0.0.35.tgz#7424a647f39c6e71c86c1edf12bfc27196c8fba1"
+  integrity sha512-7iiKdA5wHVYSbO7/Mm0hiHD3i4h+9hKUe1O4hISAe/nHhagMwb2ZbFC8jU6d7Cw+JNT2dWXN2j+WHbkhT5/l2w==
+
 "@xterm/xterm@^5.5.0":
   version "5.5.0"
   resolved "https://registry.npmmirror.com/@xterm/xterm/-/xterm-5.5.0.tgz#275fb8f6e14afa6e8a0c05d4ebc94523ff775396"
