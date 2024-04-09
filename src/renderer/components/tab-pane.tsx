@@ -1,11 +1,11 @@
-import { For, mergeProps } from 'solid-js';
+import { For, Show, mergeProps } from 'solid-js';
 import type { Component, JSXElement } from 'solid-js';
 
 interface ITab {
   id: number;
   title: string;
   active?: boolean;
-  closable?: boolean;
+  disabled?: boolean;
 }
 
 type IProps = { tabs: ITab[]; onTabClick: (tab: ITab) => void; children?: JSXElement };
@@ -16,11 +16,14 @@ const TabList = (props: { tabs: ITab[]; onTabClick: (tab: ITab) => void }) => {
       <For each={props.tabs}>
         {(tab) => (
           <div
-            classList={{ 'tab bg-dark c-light': true, active: tab.active }}
+            classList={{ 'tab p-3 bg-dark c-light': true, 'active bg-neutral': tab.active }}
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}
           >
-            {tab.title}
+            <span>{tab.title}</span>
+            <Show when={!tab.disabled}>
+              <div class="tab-close border-rd">x</div>
+            </Show>
           </div>
         )}
       </For>

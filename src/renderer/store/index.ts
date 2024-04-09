@@ -4,7 +4,7 @@ interface ITabModel {
   id: number;
   title: string;
   active?: boolean;
-  closable?: boolean;
+  disabled?: boolean;
 }
 
 const [state, setState] = createStore<{
