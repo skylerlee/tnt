@@ -1,3 +1,4 @@
+import type { JSXElement } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
 
 interface ITabModel {
@@ -5,6 +6,7 @@ interface ITabModel {
   title: string;
   active?: boolean;
   disabled?: boolean;
+  render: () => JSXElement;
 }
 
 const [state, setState] = createStore<{

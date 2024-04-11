@@ -6,6 +6,7 @@ interface ITab {
   title: string;
   active?: boolean;
   disabled?: boolean;
+  render: () => JSXElement;
 }
 
 type IProps = { tabs: ITab[]; onTabClick: (tab: ITab) => void; children?: JSXElement };
@@ -33,9 +34,12 @@ const TabList = (props: { tabs: ITab[]; onTabClick: (tab: ITab) => void }) => {
   );
 };
 
-const TabArea = (props: { children: JSXElement }) => {
-  const { children } = props;
-  return <div class="tab-area flex-1">{children}</div>;
+const TabArea = (props: { tabs: ITab[] }) => {
+  return (
+    <div class="tab-area flex-1">
+      <For each={props.tabs}>{(tab) => <div class="tab-content">{tab.render()}</div>}</For>
+    </div>
+  );
 };
 
 const TabPane: Component<IProps> = (props) => {
@@ -43,7 +47,7 @@ const TabPane: Component<IProps> = (props) => {
   return (
     <div class="tab-pane flex flex-col">
       <TabList tabs={union.tabs} onTabClick={union.onTabClick} />
-      <TabArea>{union.children}</TabArea>
+      <TabArea tabs={union.tabs} />
     </div>
   );
 };
