@@ -1,17 +1,9 @@
-import type { JSXElement } from 'solid-js';
 import { createStore, produce } from 'solid-js/store';
-
-interface ITabModel {
-  id: number;
-  title: string;
-  active?: boolean;
-  disabled?: boolean;
-  render: () => JSXElement;
-}
+import type { ITab } from '../types';
 
 const [state, setState] = createStore<{
   activeTabId?: number;
-  tabs: ITabModel[];
+  tabs: ITab[];
 }>({
   activeTabId: undefined,
   tabs: [],

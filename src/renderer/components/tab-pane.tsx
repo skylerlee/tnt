@@ -1,17 +1,13 @@
-import { For, Show, mergeProps } from 'solid-js';
-import type { Component, JSXElement } from 'solid-js';
+import { type Component, For, Show, mergeProps } from 'solid-js';
+import type { ITab } from '../types';
 
-interface ITab {
-  id: number;
-  title: string;
-  active?: boolean;
-  disabled?: boolean;
-  render: () => JSXElement;
-}
+type IProps = { tabs: ITab[]; onTabClick: (tab: ITab) => void; onTabClose: (tab: ITab) => void };
 
-type IProps = { tabs: ITab[]; onTabClick: (tab: ITab) => void; children?: JSXElement };
-
-const TabList = (props: { tabs: ITab[]; onTabClick: (tab: ITab) => void }) => {
+const TabList = (props: {
+  tabs: ITab[];
+  onTabClick: (tab: ITab) => void;
+  onTabClose: (tab: ITab) => void;
+}) => {
   return (
     <div class="tab-list flex flex-row">
       <For each={props.tabs}>
@@ -23,7 +19,11 @@ const TabList = (props: { tabs: ITab[]; onTabClick: (tab: ITab) => void }) => {
           >
             <span>{tab.title}</span>
             <Show when={!tab.disabled}>
-              <div class="tab-close flex justify-center items-center w-5 h-5 border-rd">
+              <div
+                class="tab-close flex justify-center items-center w-5 h-5 border-rd"
+                onClick={[props.onTabClose, tab]}
+                onKeyPress={() => {}}
+              >
                 <span class="codicon codicon-close" />
               </div>
             </Show>
@@ -46,7 +46,7 @@ const TabPane: Component<IProps> = (props) => {
   const union = mergeProps({ tabs: [] }, props);
   return (
     <div class="tab-pane flex flex-col">
-      <TabList tabs={union.tabs} onTabClick={union.onTabClick} />
+      <TabList tabs={union.tabs} onTabClick={union.onTabClick} onTabClose={union.onTabClose} />
       <TabArea tabs={union.tabs} />
     </div>
   );
