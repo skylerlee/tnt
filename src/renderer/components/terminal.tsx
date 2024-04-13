@@ -1,6 +1,6 @@
+import { FitAddon } from '@xterm/addon-fit';
 import { Terminal as XTerminal } from '@xterm/xterm';
-import { onCleanup, onMount } from 'solid-js';
-import type { Component } from 'solid-js';
+import { type Component, onCleanup, onMount } from 'solid-js';
 
 type IProps = { active?: boolean };
 
@@ -9,6 +9,8 @@ const Terminal: Component<IProps> = (props) => {
 
   onMount(() => {
     const term = new XTerminal();
+    const fit = new FitAddon();
+    term.loadAddon(fit);
     term.open(parent);
     term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
 
