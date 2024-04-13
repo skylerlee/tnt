@@ -1,10 +1,11 @@
 import { render } from 'solid-js/web';
 import TabPane from './components/tab-pane';
+import Terminal from './components/terminal';
 import { addTab, removeTab, setActiveTabId, state } from './store';
 
 const App = () => {
   const handleAddTab = () => {
-    addTab({ id: Date.now(), title: 'Hello world', render: () => <h1>A</h1> });
+    addTab({ id: Date.now(), title: 'Hello world', render: () => <Terminal /> });
   };
 
   const handleAddTabByKeyPress = () => {};

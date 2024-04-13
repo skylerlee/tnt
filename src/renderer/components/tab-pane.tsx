@@ -25,7 +25,7 @@ const TabList = (props: {
         {(tab) => (
           <div
             classList={{
-              'tab flex items-center px-3 py-2 bg-dark-100 c-light': true,
+              'tab flex items-center px-3 py-2 select-none bg-dark-100 c-light': true,
               'active !bg-dark': tab.id === props.activeTabId,
             }}
             onClick={[props.onTabClick, tab]}
@@ -52,10 +52,21 @@ const TabList = (props: {
   );
 };
 
-const TabArea = (props: { tabs: ITab[] }) => {
+const TabArea = (props: { tabs: ITab[]; activeTabId: number }) => {
   return (
-    <div class="tab-area flex-1">
-      <For each={props.tabs}>{(tab) => <div class="tab-content">{tab.render()}</div>}</For>
+    <div class="tab-area flex-1 relative">
+      <For each={props.tabs}>
+        {(tab) => (
+          <div
+            classList={{
+              'tab-content absolute top-0 left-0 right-0 bottom-0': true,
+              hidden: tab.id !== props.activeTabId,
+            }}
+          >
+            {tab.render()}
+          </div>
+        )}
+      </For>
     </div>
   );
 };
@@ -70,7 +81,7 @@ const TabPane: Component<IProps> = (props) => {
         onTabClick={attrs.onTabClick}
         onTabClose={attrs.onTabClose}
       />
-      <TabArea tabs={attrs.tabs} />
+      <TabArea tabs={attrs.tabs} activeTabId={attrs.activeTabId} />
     </div>
   );
 };
