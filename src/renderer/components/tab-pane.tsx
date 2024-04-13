@@ -25,7 +25,7 @@ const TabList = (props: {
         {(tab) => (
           <div
             classList={{
-              'tab flex items-center px-3 py-2 bg-neutral c-light': true,
+              'tab flex items-center px-3 py-2 bg-dark-100 c-light': true,
               'active !bg-dark': tab.id === props.activeTabId,
             }}
             onClick={[props.onTabClick, tab]}
@@ -37,7 +37,7 @@ const TabList = (props: {
             <Show when={!tab.disabled}>
               <div class="tab-action pl-2">
                 <div
-                  class="tab-close flex justify-center items-center w-5 h-5 border-rd"
+                  class="tab-close flex justify-center items-center w-5 h-5 b-solid b-1 b-transparent b-rd hover:b-black/50"
                   onClick={[handleTabClose, tab]}
                   onKeyPress={() => {}}
                 >
