@@ -1,10 +1,16 @@
 import { type Component, For, Show, mergeProps } from 'solid-js';
 import type { ITab } from '../types';
 
-type IProps = { tabs: ITab[]; onTabClick: (tab: ITab) => void; onTabClose: (tab: ITab) => void };
+type IProps = {
+  tabs: ITab[];
+  activeTabId: number;
+  onTabClick: (tab: ITab) => void;
+  onTabClose: (tab: ITab) => void;
+};
 
 const TabList = (props: {
   tabs: ITab[];
+  activeTabId: number;
   onTabClick: (tab: ITab) => void;
   onTabClose: (tab: ITab) => void;
 }) => {
@@ -13,7 +19,10 @@ const TabList = (props: {
       <For each={props.tabs}>
         {(tab) => (
           <div
-            classList={{ 'tab p-3 bg-neutral c-light': true, 'active bg-dark': tab.active }}
+            classList={{
+              'tab p-3 bg-neutral c-light': true,
+              'active bg-dark': tab.id === props.activeTabId,
+            }}
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}
           >
@@ -43,11 +52,16 @@ const TabArea = (props: { tabs: ITab[] }) => {
 };
 
 const TabPane: Component<IProps> = (props) => {
-  const union = mergeProps({ tabs: [] }, props);
+  const attrs = mergeProps({ tabs: [] }, props);
   return (
     <div class="tab-pane flex flex-col">
-      <TabList tabs={union.tabs} onTabClick={union.onTabClick} onTabClose={union.onTabClose} />
-      <TabArea tabs={union.tabs} />
+      <TabList
+        tabs={attrs.tabs}
+        activeTabId={attrs.activeTabId}
+        onTabClick={attrs.onTabClick}
+        onTabClose={attrs.onTabClose}
+      />
+      <TabArea tabs={attrs.tabs} />
     </div>
   );
 };
