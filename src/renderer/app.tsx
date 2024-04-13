@@ -1,6 +1,6 @@
 import { render } from 'solid-js/web';
 import TabPane from './components/tab-pane';
-import { addTab, setActiveTabId, state } from './store';
+import { addTab, removeTab, setActiveTabId, state } from './store';
 
 const App = () => {
   const handleAddTab = () => {
@@ -11,7 +11,11 @@ const App = () => {
 
   return (
     <div class="app flex flex-col">
-      <TabPane tabs={state.tabs} onTabClick={(tab) => setActiveTabId(tab.id)} />
+      <TabPane
+        tabs={state.tabs}
+        onTabClick={(tab) => setActiveTabId(tab.id)}
+        onTabClose={(tab) => removeTab(tab.id)}
+      />
       <div onClick={handleAddTab} onKeyPress={handleAddTabByKeyPress}>
         Add +
       </div>

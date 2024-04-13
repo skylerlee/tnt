@@ -28,4 +28,15 @@ const addTab = (tab) => {
   );
 };
 
-export { state, setActiveTabId, addTab };
+const removeTab = (tabId) => {
+  setState(
+    produce((state) => {
+      const index = state.tabs.findIndex((tab) => tab.id === tabId);
+      if (index > -1) {
+        state.tabs.splice(index, 1);
+      }
+    }),
+  );
+};
+
+export { state, setActiveTabId, addTab, removeTab };
