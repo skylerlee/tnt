@@ -25,20 +25,24 @@ const TabList = (props: {
         {(tab) => (
           <div
             classList={{
-              'tab p-3 bg-neutral c-light': true,
+              'tab flex items-center px-3 py-2 bg-neutral c-light': true,
               'active !bg-dark': tab.id === props.activeTabId,
             }}
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}
           >
-            <span>{tab.title}</span>
+            <div class="tab-text flex-1">
+              <span>{tab.title}</span>
+            </div>
             <Show when={!tab.disabled}>
-              <div
-                class="tab-close flex justify-center items-center w-5 h-5 border-rd"
-                onClick={[handleTabClose, tab]}
-                onKeyPress={() => {}}
-              >
-                <span class="codicon codicon-close" />
+              <div class="tab-action pl-2">
+                <div
+                  class="tab-close flex justify-center items-center w-5 h-5 border-rd"
+                  onClick={[handleTabClose, tab]}
+                  onKeyPress={() => {}}
+                >
+                  <span class="codicon codicon-close" />
+                </div>
               </div>
             </Show>
           </div>
