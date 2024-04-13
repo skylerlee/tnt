@@ -33,7 +33,11 @@ const removeTab = (tabId) => {
     produce((state) => {
       const index = state.tabs.findIndex((tab) => tab.id === tabId);
       if (index > -1) {
-        state.tabs.splice(index, 1);
+        const [target] = state.tabs.splice(index, 1);
+        if (target.id !== state.activeTabId) {
+          // removed an inactive tab
+          return;
+        }
         if (state.prevActiveTabId !== undefined) {
           // adopt to previous tab
           state.activeTabId = state.prevActiveTabId;

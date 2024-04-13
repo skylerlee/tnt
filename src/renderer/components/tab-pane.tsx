@@ -14,6 +14,11 @@ const TabList = (props: {
   onTabClick: (tab: ITab) => void;
   onTabClose: (tab: ITab) => void;
 }) => {
+  const handleTabClose = (tab: ITab, e: MouseEvent) => {
+    e.stopPropagation();
+    props.onTabClose(tab);
+  };
+
   return (
     <div class="tab-list flex flex-row">
       <For each={props.tabs}>
@@ -21,7 +26,7 @@ const TabList = (props: {
           <div
             classList={{
               'tab p-3 bg-neutral c-light': true,
-              'active bg-dark': tab.id === props.activeTabId,
+              'active !bg-dark': tab.id === props.activeTabId,
             }}
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}
@@ -30,7 +35,7 @@ const TabList = (props: {
             <Show when={!tab.disabled}>
               <div
                 class="tab-close flex justify-center items-center w-5 h-5 border-rd"
-                onClick={[props.onTabClose, tab]}
+                onClick={[handleTabClose, tab]}
                 onKeyPress={() => {}}
               >
                 <span class="codicon codicon-close" />
