@@ -1,11 +1,24 @@
+import { onCleanup, onMount } from 'solid-js';
 import { render } from 'solid-js/web';
 import TabPane from './components/tab-pane';
-import Terminal from './components/terminal';
+import TerminalView from './components/terminal-view';
 import { addTab, removeTab, setActiveTabId, state } from './store';
 
 const App = () => {
+  onMount(() => {
+    const handleResize = () => {
+      const e = document.createEvent('termresize');
+      document.dispatchEvent(e);
+    };
+    window.addEventListener('resize', handleResize);
+
+    onCleanup(() => {
+      window.removeEventListener('resize', handleResize);
+    });
+  });
+
   const handleAddTab = () => {
-    addTab({ id: Date.now(), title: 'Hello world', render: () => <Terminal /> });
+    addTab({ id: Date.now(), title: 'Hello world', render: () => <TerminalView /> });
   };
 
   const handleAddTabByKeyPress = () => {};
