@@ -11,7 +11,7 @@ const [state, setState] = createStore<{
   tabs: [],
 });
 
-const setActiveTabId = (tabId) => {
+const setActiveTabId = (tabId: number) => {
   setState(
     produce((state) => {
       state.prevActiveTabId = state.activeTabId;
@@ -20,15 +20,18 @@ const setActiveTabId = (tabId) => {
   );
 };
 
-const addTab = (tab) => {
+const addTab = (tab: ITab) => {
   setState(
     produce((state) => {
       state.tabs.push(tab);
+      if (state.tabs.length === 1) {
+        state.activeTabId = state.tabs[0].id;
+      }
     }),
   );
 };
 
-const removeTab = (tabId) => {
+const removeTab = (tabId: number) => {
   setState(
     produce((state) => {
       const index = state.tabs.findIndex((tab) => tab.id === tabId);
