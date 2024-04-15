@@ -16,10 +16,14 @@ const TerminalView: Component<IProps> = (props) => {
     terminal.open(parent);
     terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
 
-    // fit.fit();
+    const handleResize = () => {
+      fitAddon.fit();
+    };
+    window.addEventListener('terminal::resize', handleResize);
 
     onCleanup(() => {
       terminal.dispose();
+      window.removeEventListener('terminal::resize', handleResize);
     });
   });
 
