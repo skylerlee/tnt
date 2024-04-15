@@ -1,6 +1,8 @@
 import { createStore, produce } from 'solid-js/store';
 import type { ITab } from '../types';
 
+const tabSet = new Set<number>();
+
 const [state, setState] = createStore<{
   prevActiveTabId?: number;
   activeTabId?: number;
@@ -21,6 +23,7 @@ const setActiveTabId = (tabId: number) => {
 };
 
 const addTab = (tab: ITab) => {
+  tabSet.add(tab.id);
   setState(
     produce((state) => {
       state.tabs.push(tab);
@@ -32,6 +35,7 @@ const addTab = (tab: ITab) => {
 };
 
 const removeTab = (tabId: number) => {
+  tabSet.delete(tabId);
   setState(
     produce((state) => {
       const index = state.tabs.findIndex((tab) => tab.id === tabId);
@@ -41,19 +45,20 @@ const removeTab = (tabId: number) => {
           // removed an inactive tab
           return;
         }
-        if (state.prevActiveTabId !== undefined) {
+        if (state.prevActiveTabId !== undefined && tabSet.has(state.prevActiveTabId)) {
           // adopt to previous tab
           state.activeTabId = state.prevActiveTabId;
-        } else if (state.tabs.length > 0) {
-          if (index === state.tabs.length - 1) {
-            // adopt to preceding tab
-            state.activeTabId = state.tabs[index - 1].id;
-          } else {
-            // adopt to following tab
-            state.activeTabId = state.tabs[index].id;
-          }
-        } else {
+        } else if (state.tabs.length === 0) {
+          // empty list
           state.activeTabId = undefined;
+        } else {
+          // non-empty list
+          let nextIndex = index;
+          if (index > state.tabs.length - 1) {
+            // adopt to preceding tab
+            nextIndex = index - 1;
+          }
+          state.activeTabId = state.tabs[nextIndex].id;
         }
       }
     }),
