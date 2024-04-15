@@ -60,7 +60,7 @@ const TabArea = (props: { tabs: ITab[]; activeTabId: number }) => {
           <div
             classList={{
               'tab-content flex absolute top-0 left-0 right-0 bottom-0': true,
-              '!hidden': tab.id !== props.activeTabId,
+              '!invisible': tab.id !== props.activeTabId,
             }}
           >
             {tab.render()}
