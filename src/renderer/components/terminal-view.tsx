@@ -1,6 +1,7 @@
 import { FitAddon } from '@xterm/addon-fit';
 import { WebglAddon } from '@xterm/addon-webgl';
 import { Terminal } from '@xterm/xterm';
+import { debounce } from 'radash';
 import { type Component, onCleanup, onMount } from 'solid-js';
 
 type IProps = { active?: boolean };
@@ -16,9 +17,13 @@ const TerminalView: Component<IProps> = (props) => {
     terminal.open(parent);
     terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
 
-    const handleResize = () => {
+    Promise.resolve().then(() => {
       fitAddon.fit();
-    };
+    });
+
+    const handleResize = debounce({ delay: 200 }, () => {
+      fitAddon.fit();
+    });
     window.addEventListener('terminal::resize', handleResize);
 
     onCleanup(() => {
