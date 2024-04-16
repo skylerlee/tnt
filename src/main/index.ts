@@ -2,15 +2,15 @@ import * as path from 'node:path';
 import { BrowserWindow, app } from 'electron';
 
 function createWindow() {
+  const appPath = app.getAppPath();
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     show: false,
     webPreferences: {
-      // preload: path.join(__dirname, 'preload.js')
+      preload: path.resolve(appPath, 'preload', 'index.js'),
     },
   });
-  const appPath = app.getAppPath();
   win.loadFile(path.resolve(appPath, 'renderer', 'index.html'));
   win.once('ready-to-show', () => {
     win.show();
