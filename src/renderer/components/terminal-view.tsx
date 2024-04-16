@@ -25,11 +25,11 @@ const TerminalView: Component<IProps> = (props) => {
     const handleResize = debounce({ delay: 200 }, () => {
       fitAddon.fit();
     });
-    window.addEventListener('terminal::resize', handleResize);
+    window.addEventListener('terminal:resize', handleResize);
 
     onCleanup(() => {
       terminal.dispose();
-      window.removeEventListener('terminal::resize', handleResize);
+      window.removeEventListener('terminal:resize', handleResize);
     });
   });
 

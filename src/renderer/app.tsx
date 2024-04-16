@@ -7,7 +7,7 @@ import { addTab, removeTab, setActiveTabId, state } from './store';
 const App = () => {
   onMount(() => {
     const handleResize = () => {
-      const e = new CustomEvent('terminal::resize');
+      const e = new CustomEvent('terminal:resize');
       window.dispatchEvent(e);
     };
     window.addEventListener('resize', handleResize);
