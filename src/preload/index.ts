@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import type { IIpcAPI } from '../common/types/ipc';
+import type { IIpcAPI } from '../common/types';
 
 const ipcAPI: IIpcAPI = {
   on: (channel, listener) => {
