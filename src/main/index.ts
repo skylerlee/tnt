@@ -1,5 +1,6 @@
 import * as path from 'node:path';
 import { BrowserWindow, app } from 'electron';
+import Application from './app';
 
 function createWindow() {
   const appPath = app.getAppPath();
@@ -18,7 +19,10 @@ function createWindow() {
 }
 
 function main() {
+  const application = new Application();
+
   app.whenReady().then(() => {
+    application.setup(app);
     createWindow();
 
     app.on('activate', () => {
@@ -32,6 +36,10 @@ function main() {
     if (process.platform !== 'darwin') {
       app.quit();
     }
+  });
+
+  app.on('quit', () => {
+    application.teardown();
   });
 }
 
