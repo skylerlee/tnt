@@ -1,7 +1,7 @@
 import type { App } from 'electron';
 import PtyManager from '../pty/pty-manager';
 
-interface IAppLifecycle {
+export interface IAppLifecycle {
   setup(electronApp: App): void;
   teardown(): void;
 }
