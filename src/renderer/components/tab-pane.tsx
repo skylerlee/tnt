@@ -1,5 +1,5 @@
 import { type Component, For, Show, mergeProps } from 'solid-js';
-import type { ITab } from '../types';
+import type { ITab } from '../typings';
 
 type IProps = {
   tabs: ITab[];
