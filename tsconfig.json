@@ -3,6 +3,9 @@
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "noImplicitAny": true,
-    "noImplicitOverride": true
-  }
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true
+  },
+  "include": ["src/**/*", "__tests__/**/*"]
 }
