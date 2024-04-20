@@ -5,7 +5,7 @@ import { type IPty, spawn } from 'node-pty';
 
 export interface IPayload {
   id: number;
-  data: string | ITermSize;
+  data: string | IProfile | ITermSize;
 }
 
 export interface IPtyManager {
@@ -50,6 +50,10 @@ class PtyManager implements IPtyManager {
       return;
     }
     switch (channel) {
+      case Term.Open: {
+        this.attach(payload.id, payload.data as IProfile);
+        break;
+      }
       case Term.Write: {
         pty.write(payload.data as string);
         break;
