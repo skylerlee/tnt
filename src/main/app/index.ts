@@ -1,4 +1,5 @@
-import type { App } from 'electron';
+import { Term } from '@common/constants';
+import { type App, ipcMain } from 'electron';
 import PtyManager from '../pty/pty-manager';
 
 export interface IAppLifecycle {
@@ -13,7 +14,11 @@ class Application implements IAppLifecycle {
     this.ptyManager = new PtyManager();
   }
 
-  setup(electronApp: App) {}
+  setup(electronApp: App) {
+    ipcMain.on(Term.Open, () => {});
+    ipcMain.on(Term.Write, () => {});
+    ipcMain.on(Term.Resize, () => {});
+  }
 
   teardown() {}
 }

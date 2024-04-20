@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@common/*": ["./src/common/*"]
+    },
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "noImplicitAny": true,

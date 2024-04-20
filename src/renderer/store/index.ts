@@ -1,5 +1,5 @@
 import { createStore, produce } from 'solid-js/store';
-import type { ITab } from '../types';
+import type { ITab } from '../typings';
 
 const tabSet = new Set<number>();
 

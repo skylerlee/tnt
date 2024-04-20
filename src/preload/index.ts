@@ -1,5 +1,5 @@
+import type { IIpcAPI } from '@common/typings';
 import { contextBridge, ipcRenderer } from 'electron';
-import type { IIpcAPI } from '../common/typings';
 
 const ipcAPI: IIpcAPI = {
   on: (channel, listener) => {
