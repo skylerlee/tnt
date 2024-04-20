@@ -33,6 +33,11 @@ class PtyManager implements IPtyManager {
   }
 
   detach(id: number) {
+    const pty = this.ptys.get(id);
+    if (pty === undefined) {
+      return;
+    }
+    pty.kill();
     this.ptys.delete(id);
   }
 
