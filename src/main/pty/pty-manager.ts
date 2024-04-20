@@ -1,11 +1,7 @@
 import { Term } from '@common/constants';
+import type { IProfile, ITermSize } from '@common/typings';
 import { ipcMain } from 'electron';
-import type { IPty } from 'node-pty';
-
-export interface ITermSize {
-  columns: number;
-  rows: number;
-}
+import { type IPty, spawn } from 'node-pty';
 
 export interface IPayload {
   id: number;
@@ -13,7 +9,7 @@ export interface IPayload {
 }
 
 export interface IPtyManager {
-  attach(id: number, pty: IPty): void;
+  attach(id: number, profile: IProfile): void;
   detach(id: number): void;
   dispatch(channel: string, payload: IPayload): void;
 }
@@ -21,7 +17,11 @@ export interface IPtyManager {
 class PtyManager implements IPtyManager {
   private ptys: Map<number, IPty>;
 
-  attach(id: number, pty: IPty) {
+  attach(id: number, profile: IProfile) {
+    const { shell, cwd } = profile;
+    const pty = spawn(shell, [], {
+      cwd,
+    });
     pty.onData((data) => {
       ipcMain.emit(Term.Read, {
         id,

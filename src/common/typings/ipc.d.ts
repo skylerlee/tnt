@@ -1,6 +1,6 @@
-import type { IpcRendererEvent } from 'electron';
+import type { IProfile } from './profile';
 
 export interface IIpcAPI {
-  openTerm(): void;
-  closeTerm(): void;
+  openTerm(id: number, profile: IProfile): void;
+  closeTerm(id: number): void;
 }

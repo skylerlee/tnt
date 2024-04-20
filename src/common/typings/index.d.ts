@@ -1,9 +1,3 @@
-import { IIpcAPI } from './ipc';
+export { IIpcAPI } from './ipc';
 export { IProfile } from './profile';
-export { IIpcAPI };
-
-declare global {
-  interface Window {
-    ipcAPI: IIpcAPI;
-  }
-}
+export { ITermSize } from './term';
