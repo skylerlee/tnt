@@ -1,6 +1,6 @@
 import { Term } from '@common/constants';
 import { type App, ipcMain } from 'electron';
-import PtyManager from '../pty/pty-manager';
+import PtyManager, { type IPtyManager } from '../pty/pty-manager';
 
 export interface IAppLifecycle {
   setup(electronApp: App): void;
@@ -8,16 +8,22 @@ export interface IAppLifecycle {
 }
 
 class Application implements IAppLifecycle {
-  private ptyManager: PtyManager;
+  private ptyManager: IPtyManager;
 
   constructor() {
     this.ptyManager = new PtyManager();
   }
 
   setup(electronApp: App) {
-    ipcMain.on(Term.Open, () => {});
-    ipcMain.on(Term.Write, () => {});
-    ipcMain.on(Term.Resize, () => {});
+    ipcMain.on(Term.Open, (e, payload) => {
+      this.ptyManager.dispatch(Term.Open, payload);
+    });
+    ipcMain.on(Term.Write, (e, payload) => {
+      this.ptyManager.dispatch(Term.Write, payload);
+    });
+    ipcMain.on(Term.Resize, (e, payload) => {
+      this.ptyManager.dispatch(Term.Resize, payload);
+    });
   }
 
   teardown() {}
