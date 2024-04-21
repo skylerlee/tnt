@@ -3,15 +3,17 @@ import { type IPty, spawn } from 'node-pty';
 import { Term } from '~common/constants';
 import type { IProfile, ITermSize } from '~common/typings';
 
-export interface IPayload {
+type Param = string | IProfile | ITermSize;
+
+export interface IPayload<T extends Param> {
   id: number;
-  data: string | IProfile | ITermSize;
+  data: T;
 }
 
 export interface IPtyManager {
   attach(id: number, profile: IProfile): void;
   detach(id: number): void;
-  dispatch(channel: string, payload: IPayload): void;
+  dispatch<T extends Param>(channel: string, payload: IPayload<T>): void;
 }
 
 class PtyManager implements IPtyManager {
@@ -41,7 +43,7 @@ class PtyManager implements IPtyManager {
     this.ptys.delete(id);
   }
 
-  dispatch(channel: string, payload: IPayload) {
+  dispatch<T extends Param>(channel: string, payload: IPayload<T>) {
     if (!payload.id) {
       return;
     }

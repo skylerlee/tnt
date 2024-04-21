@@ -1,10 +1,24 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import type { IIpcAPI } from '~common/typings';
+import { Term } from '~common/constants';
+import type { IIpcAPI, IProfile } from '~common/typings';
+import type { IPayload } from '~main/pty/pty-manager';
 
 class IpcAPI implements IIpcAPI {
-  openTerm() {}
+  openTerm(id: number, profile: IProfile) {
+    const payload: IPayload<IProfile> = {
+      id,
+      data: profile,
+    };
+    ipcRenderer.invoke(Term.Open, payload);
+  }
 
-  closeTerm() {}
+  closeTerm(id: number) {
+    const payload: IPayload<string> = {
+      id,
+      data: '',
+    };
+    ipcRenderer.invoke(Term.Close, payload);
+  }
 }
 
 const ipcAPI = new IpcAPI();
