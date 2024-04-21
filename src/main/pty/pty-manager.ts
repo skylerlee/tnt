@@ -7,7 +7,7 @@ type Param = string | IProfile | ITermSize;
 
 export interface IPayload<T extends Param> {
   id: number;
-  data: T;
+  data?: T;
 }
 
 export interface IPtyManager {
@@ -54,6 +54,10 @@ class PtyManager implements IPtyManager {
     switch (channel) {
       case Term.Open: {
         this.attach(payload.id, payload.data as IProfile);
+        break;
+      }
+      case Term.Close: {
+        this.detach(payload.id);
         break;
       }
       case Term.Write: {
