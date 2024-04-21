@@ -19,10 +19,7 @@ class PtyManager implements IPtyManager {
       cwd,
     });
     pty.onData((data) => {
-      ipcMain.emit(Term.Read, {
-        id,
-        data,
-      });
+      ipcMain.emit(Term.Read, id, data);
     });
     pty.onExit((e) => {});
     this.ptys.set(id, pty);
