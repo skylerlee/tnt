@@ -1,7 +1,7 @@
-import { Term } from '@common/constants';
-import type { IProfile, ITermSize } from '@common/typings';
 import { ipcMain } from 'electron';
 import { type IPty, spawn } from 'node-pty';
+import { Term } from '~common/constants';
+import type { IProfile, ITermSize } from '~common/typings';
 
 export interface IPayload {
   id: number;

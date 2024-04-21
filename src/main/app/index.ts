@@ -1,5 +1,5 @@
-import { Term } from '@common/constants';
 import { type App, ipcMain } from 'electron';
+import { Term } from '~common/constants';
 import PtyManager, { type IPtyManager } from '../pty/pty-manager';
 
 export interface IAppLifecycle {
