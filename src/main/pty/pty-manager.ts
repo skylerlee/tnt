@@ -3,17 +3,11 @@ import { type IPty, spawn } from 'node-pty';
 import { Term } from '~common/constants';
 import type { IProfile, ITermSize } from '~common/typings';
 
-type Param = string | IProfile | ITermSize;
-
-export interface IPayload<T extends Param> {
-  id: number;
-  data?: T;
-}
-
 export interface IPtyManager {
   attach(id: number, profile: IProfile): void;
   detach(id: number): void;
-  dispatch<T extends Param>(channel: string, payload: IPayload<T>): void;
+  write(id: number, input: string): void;
+  resize(id: number, size: ITermSize): void;
 }
 
 class PtyManager implements IPtyManager {
@@ -43,25 +37,21 @@ class PtyManager implements IPtyManager {
     this.ptys.delete(id);
   }
 
-  dispatch<T extends Param>(channel: string, payload: IPayload<T>) {
-    if (!payload.id) {
-      return;
-    }
-    const pty = this.ptys.get(payload.id);
+  write(id: number, input: string) {
+    const pty = this.ptys.get(id);
     if (pty === undefined) {
       return;
     }
-    switch (channel) {
-      case Term.Write: {
-        pty.write(payload.data as string);
-        break;
-      }
-      case Term.Resize: {
-        const { columns, rows } = payload.data as ITermSize;
-        pty.resize(columns, rows);
-        break;
-      }
+    pty.write(input);
+  }
+
+  resize(id: number, size: ITermSize) {
+    const pty = this.ptys.get(id);
+    if (pty === undefined) {
+      return;
     }
+    const { columns, rows } = size;
+    pty.resize(columns, rows);
   }
 }
 
