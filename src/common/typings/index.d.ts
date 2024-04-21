@@ -1,3 +1,3 @@
 export { IIpcAPI } from './ipc';
 export { IProfile } from './profile';
-export { ITermSize } from './term';
+export { ITermHandle, ITermSize } from './term';
