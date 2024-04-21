@@ -1,6 +1,7 @@
 import { type App, ipcMain } from 'electron';
 import { Term } from '~common/constants';
-import PtyManager, { type IPtyManager } from '../pty/pty-manager';
+import type { IProfile, ITermSize } from '~common/typings';
+import PtyManager, { type IPayload, type IPtyManager } from '../pty/pty-manager';
 
 export interface IAppLifecycle {
   setup(electronApp: App): void;
@@ -8,20 +9,19 @@ export interface IAppLifecycle {
 }
 
 class Application implements IAppLifecycle {
-  private ptyManager: IPtyManager;
-
-  constructor() {
-    this.ptyManager = new PtyManager();
-  }
+  private ptyManager: IPtyManager = new PtyManager();
 
   setup(electronApp: App) {
-    ipcMain.on(Term.Open, (e, payload) => {
-      this.ptyManager.dispatch(Term.Open, payload);
+    ipcMain.handle(Term.Open, async (e, payload: IPayload<IProfile>) => {
+      this.ptyManager.attach(payload.id, payload.data);
     });
-    ipcMain.on(Term.Write, (e, payload) => {
+    ipcMain.on(Term.Close, (e, payload: IPayload<undefined>) => {
+      this.ptyManager.detach(payload.id);
+    });
+    ipcMain.on(Term.Write, (e, payload: IPayload<string>) => {
       this.ptyManager.dispatch(Term.Write, payload);
     });
-    ipcMain.on(Term.Resize, (e, payload) => {
+    ipcMain.on(Term.Resize, (e, payload: IPayload<ITermSize>) => {
       this.ptyManager.dispatch(Term.Resize, payload);
     });
   }

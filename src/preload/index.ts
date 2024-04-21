@@ -9,7 +9,7 @@ const ipcAPI: IIpcAPI = {
       id,
       data: profile,
     };
-    ipcRenderer.invoke(Term.Open, payload);
+    return ipcRenderer.invoke(Term.Open, payload);
   },
   closeTerm(id: number) {
     const payload: IPayload<undefined> = {

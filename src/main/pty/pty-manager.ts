@@ -17,7 +17,7 @@ export interface IPtyManager {
 }
 
 class PtyManager implements IPtyManager {
-  private ptys: Map<number, IPty>;
+  private ptys = new Map<number, IPty>();
 
   attach(id: number, profile: IProfile) {
     const { shell, cwd } = profile;
@@ -52,14 +52,6 @@ class PtyManager implements IPtyManager {
       return;
     }
     switch (channel) {
-      case Term.Open: {
-        this.attach(payload.id, payload.data as IProfile);
-        break;
-      }
-      case Term.Close: {
-        this.detach(payload.id);
-        break;
-      }
       case Term.Write: {
         pty.write(payload.data as string);
         break;
