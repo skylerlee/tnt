@@ -1,4 +1,4 @@
-import { type App, ipcMain } from 'electron';
+import { type App, BrowserWindow, ipcMain } from 'electron';
 import { Term } from '~common/constants';
 import type { IProfile, ITermSize } from '~common/typings';
 import PtyManager, { type IPtyManager } from '../pty/pty-manager';
@@ -8,8 +8,12 @@ export interface IAppLifecycle {
   teardown(): void;
 }
 
-class Application implements IAppLifecycle {
-  private ptyManager: IPtyManager = new PtyManager();
+export interface IBroadcaster {
+  broadcast(channel: string, ...args: unknown[]): void;
+}
+
+class Application implements IAppLifecycle, IBroadcaster {
+  private ptyManager: IPtyManager = new PtyManager(this);
 
   setup(electronApp: App) {
     ipcMain.handle(Term.Open, async (e, id: number, profile: IProfile) => {
@@ -27,6 +31,12 @@ class Application implements IAppLifecycle {
   }
 
   teardown() {}
+
+  broadcast(channel: string, ...args: unknown[]) {
+    for (const win of BrowserWindow.getAllWindows()) {
+      win.webContents.emit(channel, ...args);
+    }
+  }
 }
 
 export default Application;

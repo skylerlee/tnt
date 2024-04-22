@@ -1,7 +1,7 @@
-import { ipcMain } from 'electron';
 import { type IPty, spawn } from 'node-pty';
 import { Term } from '~common/constants';
 import type { IProfile, ITermSize } from '~common/typings';
+import type { IBroadcaster } from '~main/app';
 
 export interface IPtyManager {
   attach(id: number, profile: IProfile): void;
@@ -12,6 +12,11 @@ export interface IPtyManager {
 
 class PtyManager implements IPtyManager {
   private ptys = new Map<number, IPty>();
+  private broadcaster: IBroadcaster;
+
+  constructor(broadcaster: IBroadcaster) {
+    this.broadcaster = broadcaster;
+  }
 
   attach(id: number, profile: IProfile) {
     const { shell, cwd } = profile;
@@ -19,7 +24,7 @@ class PtyManager implements IPtyManager {
       cwd,
     });
     pty.onData((data) => {
-      ipcMain.emit(Term.Read, id, data);
+      this.broadcaster.broadcast(Term.Read, id, data);
     });
     pty.onExit((e) => {});
     this.ptys.set(id, pty);
