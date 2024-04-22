@@ -1,5 +1,6 @@
 import { onCleanup, onMount } from 'solid-js';
 import { render } from 'solid-js/web';
+import { TermView } from '~common/constants/term';
 import TabPane from './components/tab-pane';
 import TerminalView from './components/terminal-view';
 import { addTab, removeTab, setActiveTabId, state } from './store';
@@ -7,7 +8,7 @@ import { addTab, removeTab, setActiveTabId, state } from './store';
 const App = () => {
   onMount(() => {
     const handleResize = () => {
-      const e = new CustomEvent('terminal:resize');
+      const e = new CustomEvent(TermView.Resize);
       window.dispatchEvent(e);
     };
     window.addEventListener('resize', handleResize);

@@ -34,7 +34,7 @@ class Application implements IAppLifecycle, IBroadcaster {
 
   broadcast(channel: string, ...args: unknown[]) {
     for (const win of BrowserWindow.getAllWindows()) {
-      win.webContents.emit(channel, ...args);
+      win.webContents.send(channel, ...args);
     }
   }
 }

@@ -5,3 +5,7 @@ export enum Term {
   Write = 'term:write',
   Resize = 'term:resize',
 }
+
+export enum TermView {
+  Resize = 'termview:resize',
+}

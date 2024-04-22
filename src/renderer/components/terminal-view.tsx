@@ -3,6 +3,7 @@ import { WebglAddon } from '@xterm/addon-webgl';
 import { Terminal } from '@xterm/xterm';
 import { debounce } from 'radash';
 import { type Component, onCleanup, onMount } from 'solid-js';
+import { TermView } from '~common/constants/term';
 import { nextTick } from '../utils/async';
 
 type IProps = { active?: boolean };
@@ -25,11 +26,11 @@ const TerminalView: Component<IProps> = (props) => {
     const handleResize = debounce({ delay: 200 }, () => {
       fitAddon.fit();
     });
-    window.addEventListener('terminal:resize', handleResize);
+    window.addEventListener(TermView.Resize, handleResize);
 
     onCleanup(() => {
       terminal.dispose();
-      window.removeEventListener('terminal:resize', handleResize);
+      window.removeEventListener(TermView.Resize, handleResize);
     });
   });
 
