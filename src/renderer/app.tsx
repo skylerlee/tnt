@@ -7,19 +7,20 @@ import { addTab, removeTab, setActiveTabId, state } from './store';
 
 const App = () => {
   onMount(() => {
-    const handleResize = () => {
+    const handleWindowResize = () => {
       const e = new CustomEvent(TermView.Resize);
       window.dispatchEvent(e);
     };
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleWindowResize);
 
     onCleanup(() => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleWindowResize);
     });
   });
 
   const handleAddTab = () => {
-    addTab({ id: Date.now(), title: 'Hello world', render: () => <TerminalView /> });
+    const id = Date.now();
+    addTab({ id, title: 'Hello world', render: () => <TerminalView id={id} /> });
   };
 
   const handleAddTabByKeyPress = () => {};

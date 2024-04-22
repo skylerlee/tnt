@@ -6,18 +6,22 @@ import { type Component, onCleanup, onMount } from 'solid-js';
 import { TermView } from '~common/constants/term';
 import { nextTick } from '../utils/async';
 
-type IProps = { active?: boolean };
+type IProps = { id: number };
 
 const TerminalView: Component<IProps> = (props) => {
   let parent: HTMLDivElement;
 
-  onMount(() => {
+  onMount(async () => {
     const terminal = new Terminal();
     const fitAddon = new FitAddon();
     terminal.loadAddon(fitAddon);
     terminal.loadAddon(new WebglAddon());
     terminal.open(parent);
-    terminal.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ');
+
+    const handle = await window.ipcAPI.openTerm(props.id, { shell: 'zsh', cwd: '/home/skyler' });
+    handle.onRead((output) => {
+      terminal.write(output);
+    });
 
     nextTick(() => {
       fitAddon.fit();
