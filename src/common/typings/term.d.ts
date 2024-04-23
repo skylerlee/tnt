@@ -1,4 +1,4 @@
 export interface ITermSize {
-  columns: number;
+  cols: number;
   rows: number;
 }

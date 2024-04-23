@@ -1,7 +1,7 @@
 import { FitAddon } from '@xterm/addon-fit';
 import { WebglAddon } from '@xterm/addon-webgl';
 import { Terminal } from '@xterm/xterm';
-import { debounce } from 'radash';
+import { throttle } from 'radash';
 import { type Component, onCleanup, onMount } from 'solid-js';
 import { TermView } from '~common/constants/term';
 import { nextTick } from '../utils/async';
@@ -18,16 +18,18 @@ const TerminalView: Component<IProps> = (props) => {
     terminal.loadAddon(new WebglAddon());
     terminal.open(parent);
 
-    const ok = await window.ipcAPI.openTerm(props.id, { shell: 'zsh', cwd: '/home/skyler' });
+    // start terminal process
+    const ok = await window.ipcAPI.openTerm(props.id, {
+      shell: 'zsh',
+      cwd: '/home/skyler',
+      initialSize: fitAddon.proposeDimensions(),
+    });
     if (ok) {
       terminal.onData((input) => {
         window.ipcAPI.writeTerm(props.id, input);
       });
       terminal.onResize((size) => {
-        window.ipcAPI.resizeTerm(props.id, {
-          columns: size.cols,
-          rows: size.rows,
-        });
+        window.ipcAPI.resizeTerm(props.id, size);
       });
       window.ipcAPI.onReadTerm(props.id, (output) => {
         terminal.write(output);
@@ -38,7 +40,7 @@ const TerminalView: Component<IProps> = (props) => {
       fitAddon.fit();
     });
 
-    const handleResize = debounce({ delay: 200 }, () => {
+    const handleResize = throttle({ interval: 200 }, () => {
       fitAddon.fit();
     });
     window.addEventListener(TermView.Resize, handleResize);

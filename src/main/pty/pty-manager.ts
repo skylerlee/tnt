@@ -19,9 +19,11 @@ class PtyManager implements IPtyManager {
   }
 
   attach(id: number, profile: IProfile) {
-    const { shell, cwd } = profile;
+    const { shell, cwd, initialSize } = profile;
     const pty = spawn(shell, [], {
       cwd,
+      cols: initialSize.cols,
+      rows: initialSize.rows,
     });
     pty.onData((data) => {
       this.broadcaster.broadcast(Term.Read, id, data);
@@ -52,8 +54,8 @@ class PtyManager implements IPtyManager {
     if (pty === undefined) {
       return;
     }
-    const { columns, rows } = size;
-    pty.resize(columns, rows);
+    const { cols, rows } = size;
+    pty.resize(cols, rows);
   }
 }
 
