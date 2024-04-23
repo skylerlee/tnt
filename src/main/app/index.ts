@@ -18,6 +18,7 @@ class Application implements IAppLifecycle, IBroadcaster {
   setup(electronApp: App) {
     ipcMain.handle(Term.Open, async (e, id: number, profile: IProfile) => {
       this.ptyManager.attach(id, profile);
+      return true;
     });
     ipcMain.on(Term.Close, (e, id: number) => {
       this.ptyManager.detach(id);
