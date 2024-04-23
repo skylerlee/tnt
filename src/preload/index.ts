@@ -7,13 +7,13 @@ const ipcAPI: IIpcAPI = {
     return ipcRenderer.invoke(Term.Open, id, profile);
   },
   closeTerm(id: number) {
-    ipcRenderer.emit(Term.Close, id);
+    ipcRenderer.send(Term.Close, id);
   },
   writeTerm(id: number, input: string) {
-    ipcRenderer.emit(Term.Write, id, input);
+    ipcRenderer.send(Term.Write, id, input);
   },
   resizeTerm(id: number, size: ITermSize) {
-    ipcRenderer.emit(Term.Resize, id, size);
+    ipcRenderer.send(Term.Resize, id, size);
   },
   onReadTerm(id: number, listener: (data: string) => void) {
     ipcRenderer.on(Term.Read, (e, tid: number, data: string) => {
