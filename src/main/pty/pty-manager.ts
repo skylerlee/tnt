@@ -22,8 +22,8 @@ class PtyManager implements IPtyManager {
     const { shell, cwd, initialSize } = profile;
     const pty = spawn(shell, [], {
       cwd,
-      cols: initialSize.cols,
-      rows: initialSize.rows,
+      cols: initialSize?.cols,
+      rows: initialSize?.rows,
     });
     pty.onData((data) => {
       this.broadcaster.broadcast(Term.Read, id, data);
