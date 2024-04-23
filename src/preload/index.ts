@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { type IpcRendererEvent, contextBridge, ipcRenderer } from 'electron';
 import { Term } from '~common/constants';
 import type { IIpcAPI, IProfile, ITermSize } from '~common/typings';
 
@@ -16,11 +16,17 @@ const ipcAPI: IIpcAPI = {
     ipcRenderer.send(Term.Resize, id, size);
   },
   onReadTerm(id: number, listener: (data: string) => void) {
-    ipcRenderer.on(Term.Read, (e, tid: number, data: string) => {
+    const callback = (e: IpcRendererEvent, tid: number, data: string) => {
       if (tid === id) {
         listener(data);
       }
-    });
+    };
+    ipcRenderer.on(Term.Read, callback);
+    return {
+      dispose: () => {
+        ipcRenderer.off(Term.Read, callback);
+      },
+    };
   },
 };
 

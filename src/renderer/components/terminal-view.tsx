@@ -4,6 +4,7 @@ import { Terminal } from '@xterm/xterm';
 import { throttle } from 'radash';
 import { type Component, onCleanup, onMount } from 'solid-js';
 import { TermView } from '~common/constants/term';
+import { Disposable } from '~common/utils/disposable';
 import { nextTick } from '../utils/async';
 
 type IProps = { id: number };
@@ -24,16 +25,23 @@ const TerminalView: Component<IProps> = (props) => {
       cwd: '/home/skyler',
       initialSize: fitAddon.proposeDimensions(),
     });
+    const disposable = new Disposable();
     if (ok) {
-      terminal.onData((input) => {
-        window.ipcAPI.writeTerm(props.id, input);
-      });
-      terminal.onResize((size) => {
-        window.ipcAPI.resizeTerm(props.id, size);
-      });
-      window.ipcAPI.onReadTerm(props.id, (output) => {
-        terminal.write(output);
-      });
+      disposable.register(
+        terminal.onData((input) => {
+          window.ipcAPI.writeTerm(props.id, input);
+        }),
+      );
+      disposable.register(
+        terminal.onResize((size) => {
+          window.ipcAPI.resizeTerm(props.id, size);
+        }),
+      );
+      disposable.register(
+        window.ipcAPI.onReadTerm(props.id, (output) => {
+          terminal.write(output);
+        }),
+      );
     }
 
     nextTick(() => {
@@ -46,6 +54,7 @@ const TerminalView: Component<IProps> = (props) => {
     window.addEventListener(TermView.Resize, handleResize);
 
     onCleanup(() => {
+      disposable.dispose();
       terminal.dispose();
       window.removeEventListener(TermView.Resize, handleResize);
     });
