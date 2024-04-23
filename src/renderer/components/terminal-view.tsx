@@ -18,10 +18,21 @@ const TerminalView: Component<IProps> = (props) => {
     terminal.loadAddon(new WebglAddon());
     terminal.open(parent);
 
-    const handle = await window.ipcAPI.openTerm(props.id, { shell: 'zsh', cwd: '/home/skyler' });
-    handle.onRead((output) => {
-      terminal.write(output);
-    });
+    const ok = await window.ipcAPI.openTerm(props.id, { shell: 'zsh', cwd: '/home/skyler' });
+    if (ok) {
+      terminal.onData((input) => {
+        window.ipcAPI.writeTerm(props.id, input);
+      });
+      terminal.onResize((size) => {
+        window.ipcAPI.resizeTerm(props.id, {
+          columns: size.cols,
+          rows: size.rows,
+        });
+      });
+      window.ipcAPI.onReadTerm(props.id, (output) => {
+        terminal.write(output);
+      });
+    }
 
     nextTick(() => {
       fitAddon.fit();

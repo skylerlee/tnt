@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { Term } from '~common/constants';
-import type { IIpcAPI, IProfile } from '~common/typings';
+import type { IIpcAPI, IProfile, ITermSize } from '~common/typings';
 
 const ipcAPI: IIpcAPI = {
   openTerm(id: number, profile: IProfile): Promise<boolean> {
@@ -8,6 +8,19 @@ const ipcAPI: IIpcAPI = {
   },
   closeTerm(id: number) {
     ipcRenderer.emit(Term.Close, id);
+  },
+  writeTerm(id: number, input: string) {
+    ipcRenderer.emit(Term.Write, id, input);
+  },
+  resizeTerm(id: number, size: ITermSize) {
+    ipcRenderer.emit(Term.Resize, id, size);
+  },
+  onReadTerm(id: number, listener: (data: string) => void) {
+    ipcRenderer.on(Term.Read, (e, tid: number, data: string) => {
+      if (tid === id) {
+        listener(data);
+      }
+    });
   },
 };
 
