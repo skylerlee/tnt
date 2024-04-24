@@ -2,7 +2,7 @@ export interface IDisposable {
   dispose(): void;
 }
 
-export class Disposable implements IDisposable {
+export class Disposables implements IDisposable {
   protected _disposables: IDisposable[] = [];
   protected _isDisposed = false;
 

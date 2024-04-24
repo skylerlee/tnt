@@ -4,7 +4,7 @@ import { Terminal } from '@xterm/xterm';
 import { throttle } from 'radash';
 import { type Component, onCleanup, onMount } from 'solid-js';
 import { TermView } from '~common/constants/term';
-import { Disposable } from '~common/utils/disposable';
+import { Disposables } from '~common/utils/disposables';
 
 type IProps = { id: number };
 
@@ -19,7 +19,7 @@ const TerminalView: Component<IProps> = (props) => {
     terminal.loadAddon(new WebglAddon());
     terminal.open(parent);
 
-    const disposables = new Disposable();
+    const disposables = new Disposables();
     disposables.register(terminal);
 
     // start terminal process
