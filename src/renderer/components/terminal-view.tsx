@@ -5,53 +5,59 @@ import { throttle } from 'radash';
 import { type Component, onCleanup, onMount } from 'solid-js';
 import { TermView } from '~common/constants/term';
 import { Disposable } from '~common/utils/disposable';
-import { nextTick } from '../utils/async';
 
 type IProps = { id: number };
 
 const TerminalView: Component<IProps> = (props) => {
+  const { id } = props;
   let parent: HTMLDivElement;
 
-  onMount(async () => {
+  onMount(() => {
     const terminal = new Terminal();
     const fitAddon = new FitAddon();
     terminal.loadAddon(fitAddon);
     terminal.loadAddon(new WebglAddon());
     terminal.open(parent);
 
-    // start terminal process
-    const ok = await window.ipcAPI.openTerm(props.id, {
-      shell: 'zsh',
-      cwd: '/home/skyler',
-      initialSize: fitAddon.proposeDimensions(),
-    });
-    const disposable = new Disposable();
-    if (ok) {
-      disposable.register(
-        terminal.onData((input) => {
-          window.ipcAPI.writeTerm(props.id, input);
-        }),
-      );
-      disposable.register(
-        terminal.onResize((size) => {
-          window.ipcAPI.resizeTerm(props.id, size);
-        }),
-      );
-      disposable.register(
-        window.ipcAPI.onReadTerm(props.id, (output) => {
-          terminal.write(output);
-        }),
-      );
-      disposable.register({
-        dispose: () => {
-          window.ipcAPI.closeTerm(props.id);
-        },
-      });
-    }
+    const disposables = new Disposable();
+    disposables.register(terminal);
 
-    nextTick(() => {
-      fitAddon.fit();
-    });
+    // start terminal process
+    window.ipcAPI
+      .openTerm(id, {
+        shell: 'zsh',
+        cwd: '/home/skyler',
+        initialSize: fitAddon.proposeDimensions(),
+      })
+      .then((ok) => {
+        if (!ok) {
+          console.error('openTerm failed');
+          return;
+        }
+        disposables.register(
+          terminal.onData((input) => {
+            window.ipcAPI.writeTerm(id, input);
+          }),
+        );
+        disposables.register(
+          terminal.onResize((size) => {
+            window.ipcAPI.resizeTerm(id, size);
+          }),
+        );
+        disposables.register(
+          window.ipcAPI.onReadTerm(id, (output) => {
+            terminal.write(output);
+          }),
+        );
+        disposables.register({
+          dispose: () => {
+            // stop terminal process
+            window.ipcAPI.closeTerm(id);
+          },
+        });
+        // trigger resize
+        fitAddon.fit();
+      });
 
     const handleResize = throttle({ interval: 200 }, () => {
       fitAddon.fit();
@@ -59,8 +65,7 @@ const TerminalView: Component<IProps> = (props) => {
     window.addEventListener(TermView.Resize, handleResize);
 
     onCleanup(() => {
-      disposable.dispose();
-      terminal.dispose();
+      disposables.dispose();
       window.removeEventListener(TermView.Resize, handleResize);
     });
   });
