@@ -42,6 +42,11 @@ const TerminalView: Component<IProps> = (props) => {
           terminal.write(output);
         }),
       );
+      disposable.register({
+        dispose: () => {
+          window.ipcAPI.closeTerm(props.id);
+        },
+      });
     }
 
     nextTick(() => {
