@@ -20,7 +20,7 @@ const TabList = (props: {
   };
 
   return (
-    <div class="tab-list flex flex-row h-10 bg-dark-100 c-light">
+    <div class="tab-list flex flex-row h-10 bg-dark-300 c-light b-b-solid b-b-2 b-b-dark-100">
       <For each={props.tabs}>
         {(tab) => (
           <div
