@@ -1,5 +1,6 @@
 import { type Component, For, Show, mergeProps } from 'solid-js';
 import type { ITab } from '../typings';
+import DndManager from '../utils/dnd';
 
 type IProps = {
   tabs: ITab[];
@@ -7,6 +8,8 @@ type IProps = {
   onTabClick: (tab: ITab) => void;
   onTabClose: (tab: ITab) => void;
 };
+
+const dnd = new DndManager();
 
 const TabList = (props: {
   tabs: ITab[];
@@ -30,6 +33,10 @@ const TabList = (props: {
             }}
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}
+            draggable="true"
+            onDragStart={[dnd.dragStart, tab.id]}
+            onDragOver={[dnd.dragOver, tab.id]}
+            onDragEnd={dnd.dragEnd}
           >
             <div class="tab-text flex-1">
               <span>{tab.title}</span>
