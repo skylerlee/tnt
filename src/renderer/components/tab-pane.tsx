@@ -20,13 +20,13 @@ const TabList = (props: {
   };
 
   return (
-    <div class="tab-list flex flex-row">
+    <div class="tab-list flex flex-row h-10 bg-dark-100 c-light">
       <For each={props.tabs}>
         {(tab) => (
           <div
             classList={{
-              'tab flex items-center px-3 py-2 select-none bg-dark-100 c-light': true,
-              'active !bg-dark': tab.id === props.activeTabId,
+              'tab flex items-center px-3 py-2 select-none bg-dark-300 c-light': true,
+              'active !bg-dark-100': tab.id === props.activeTabId,
             }}
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}
