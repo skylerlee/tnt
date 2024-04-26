@@ -9,7 +9,8 @@
     "noImplicitAny": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "strict": true
   },
   "include": ["src/**/*", "__tests__/**/*"]
 }
