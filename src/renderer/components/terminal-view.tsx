@@ -10,7 +10,7 @@ type IProps = { id: number };
 
 const TerminalView: Component<IProps> = (props) => {
   const { id } = props;
-  let parent: HTMLDivElement;
+  let parent!: HTMLDivElement;
 
   onMount(() => {
     const terminal = new Terminal();
