@@ -66,15 +66,22 @@ class Dimen implements IDimen {
   }
 }
 
-class DndListener {}
+class DndListener {
+  onSwap(id1: number, id2: number) {
+    console.log(id1, id2);
+  }
+}
 
 class DndManager implements IDndManager {
   private readonly safeEdge = 8;
   private draggingId?: number;
   private draggingStart?: IPoint;
   private draggingDimen?: IDimen;
+  private dndListener: DndListener;
 
-  constructor(private axis: 'x' | 'y' = 'x') {}
+  constructor(private axis: 'x' | 'y' = 'x') {
+    this.dndListener = new DndListener();
+  }
 
   mouseDown = (e: MouseEvent) => {
     this.draggingStart = {
@@ -95,7 +102,7 @@ class DndManager implements IDndManager {
       return;
     }
     const targetDimen = Dimen.from(targetItem);
-    if (!this.draggingStart || !this.draggingDimen) {
+    if (!this.draggingId || !this.draggingStart || !this.draggingDimen) {
       return;
     }
     const currentX = this.draggingDimen.x + e.pageX - this.draggingStart.x;
@@ -107,13 +114,20 @@ class DndManager implements IDndManager {
       this.draggingDimen.height,
     );
     if (this.axis === 'x') {
-      if (currentDimen.centerX > targetDimen.x + this.safeEdge) {
+      if (
+        currentDimen.centerX > targetDimen.x + this.safeEdge &&
+        currentDimen.centerX < targetDimen.x1 - this.safeEdge
+      ) {
         // dragging rightwards
-        console.log(this.draggingId, id);
+        this.dndListener.onSwap(this.draggingId, id);
       }
-      if (currentDimen.centerX < targetDimen.x1 - this.safeEdge) {
-        // dragging leftwards
-        console.log(this.draggingId, id);
+    } else if (this.axis === 'y') {
+      if (
+        currentDimen.centerY > targetDimen.y + this.safeEdge &&
+        currentDimen.centerY < targetDimen.y1 - this.safeEdge
+      ) {
+        // dragging downwards
+        this.dndListener.onSwap(this.draggingId, id);
       }
     }
   };
