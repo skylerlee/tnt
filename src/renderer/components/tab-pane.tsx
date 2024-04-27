@@ -1,4 +1,4 @@
-import { type Component, For, Show, mergeProps, onCleanup, onMount } from 'solid-js';
+import { type Component, For, Show, mergeProps, onMount } from 'solid-js';
 import type { ITab } from '../typings';
 import DndManager, { type IDndManager } from '../utils/dnd';
 
@@ -10,20 +10,16 @@ type IProps = {
   onTabSwap: (tabId1: number, tabId2: number) => void;
 };
 
-const TabList = (props: {
-  tabs: ITab[];
-  activeTabId: number;
-  onTabClick: (tab: ITab) => void;
-  onTabClose: (tab: ITab) => void;
-  onTabSwap: (tabId1: number, tabId2: number) => void;
-}) => {
+const TabList = (
+  props: Pick<IProps, 'tabs' | 'activeTabId' | 'onTabClick' | 'onTabClose' | 'onTabSwap'>,
+) => {
   let dnd: IDndManager;
 
   onMount(() => {
-    dnd = new DndManager();
+    dnd = new DndManager('x', {
+      onSwap: props.onTabSwap,
+    });
   });
-
-  onCleanup(() => {});
 
   const handleTabClose = (tab: ITab, e: MouseEvent) => {
     e.stopPropagation();
@@ -68,7 +64,7 @@ const TabList = (props: {
   );
 };
 
-const TabArea = (props: { tabs: ITab[]; activeTabId: number }) => {
+const TabArea = (props: Pick<IProps, 'tabs' | 'activeTabId'>) => {
   return (
     <div class="tab-area flex-1 relative">
       <For each={props.tabs}>

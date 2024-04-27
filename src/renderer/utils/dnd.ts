@@ -5,6 +5,10 @@ export interface IDndManager {
   dragEnd(): void;
 }
 
+export interface IDndListener {
+  onSwap(id1: number, id2: number): void;
+}
+
 interface IPoint {
   x: number;
   y: number;
@@ -66,22 +70,16 @@ class Dimen implements IDimen {
   }
 }
 
-class DndListener {
-  onSwap(id1: number, id2: number) {
-    console.log(id1, id2);
-  }
-}
-
 class DndManager implements IDndManager {
   private readonly safeEdge = 8;
   private draggingId?: number;
   private draggingStart?: IPoint;
   private draggingDimen?: IDimen;
-  private dndListener: DndListener;
 
-  constructor(private axis: 'x' | 'y' = 'x') {
-    this.dndListener = new DndListener();
-  }
+  constructor(
+    private axis: 'x' | 'y',
+    private listener: IDndListener,
+  ) {}
 
   mouseDown = (e: MouseEvent) => {
     this.draggingStart = {
@@ -119,7 +117,7 @@ class DndManager implements IDndManager {
         currentDimen.centerX < targetDimen.x1 - this.safeEdge
       ) {
         // dragging rightwards
-        this.dndListener.onSwap(this.draggingId, id);
+        this.listener.onSwap(this.draggingId, id);
       }
     } else if (this.axis === 'y') {
       if (
@@ -127,7 +125,7 @@ class DndManager implements IDndManager {
         currentDimen.centerY < targetDimen.y1 - this.safeEdge
       ) {
         // dragging downwards
-        this.dndListener.onSwap(this.draggingId, id);
+        this.listener.onSwap(this.draggingId, id);
       }
     }
   };
