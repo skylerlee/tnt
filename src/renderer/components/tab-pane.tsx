@@ -34,6 +34,7 @@ const TabList = (props: {
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}
             draggable="true"
+            onMouseDown={dnd.mouseDown}
             onDragStart={[dnd.dragStart, tab.id]}
             onDragOver={[dnd.dragOver, tab.id]}
             onDragEnd={dnd.dragEnd}

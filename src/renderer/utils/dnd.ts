@@ -1,7 +1,13 @@
 export interface IDndManager {
-  dragStart(id: number, e: DragEvent): void;
-  dragOver(id: number, e: DragEvent): void;
+  mouseDown(e: MouseEvent): void;
+  dragStart(id: number, e: MouseEvent): void;
+  dragOver(id: number, e: MouseEvent): void;
   dragEnd(): void;
+}
+
+interface IPoint {
+  x: number;
+  y: number;
 }
 
 interface IDimen {
@@ -9,6 +15,8 @@ interface IDimen {
   y: number;
   width: number;
   height: number;
+  get x1(): number;
+  get y1(): number;
   get centerX(): number;
   get centerY(): number;
 }
@@ -24,44 +32,96 @@ function closest(el: HTMLElement, predicate: (el: HTMLElement) => boolean): HTML
   return null;
 }
 
-function getDimen(el: HTMLElement): IDimen {
-  return {
-    x: el.offsetLeft,
-    y: el.offsetTop,
-    width: el.offsetWidth,
-    height: el.offsetHeight,
-    get centerX() {
-      return this.x + this.width / 2;
-    },
-    get centerY() {
-      return this.y + this.height / 2;
-    },
-  };
+class Dimen implements IDimen {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+
+  static from(el: HTMLElement): IDimen {
+    return new Dimen(el.offsetLeft, el.offsetTop, el.offsetWidth, el.offsetHeight);
+  }
+
+  constructor(x: number, y: number, width: number, height: number) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  get x1() {
+    return this.x + this.width;
+  }
+
+  get y1() {
+    return this.y + this.height;
+  }
+
+  get centerX() {
+    return this.x + this.width / 2;
+  }
+
+  get centerY() {
+    return this.y + this.height / 2;
+  }
 }
+
+class DndListener {}
 
 class DndManager implements IDndManager {
   private readonly safeEdge = 8;
   private draggingId?: number;
-  private draggingEl?: HTMLElement;
+  private draggingStart?: IPoint;
+  private draggingDimen?: IDimen;
 
-  dragStart = (id: number, e: DragEvent) => {
-    this.draggingId = id;
-    this.draggingEl = e.target as HTMLElement;
+  constructor(private axis: 'x' | 'y' = 'x') {}
+
+  mouseDown = (e: MouseEvent) => {
+    this.draggingStart = {
+      x: e.pageX,
+      y: e.pageY,
+    };
   };
 
-  dragOver = (id: number, e: DragEvent) => {
+  dragStart = (id: number, e: MouseEvent) => {
+    this.draggingId = id;
+    this.draggingDimen = Dimen.from(e.target as HTMLElement);
+  };
+
+  dragOver = (id: number, e: MouseEvent) => {
     const targetItem = closest(e.target as HTMLElement, (el) => el.draggable);
     if (targetItem === null || id === this.draggingId) {
       // prevent dragging over self
       return;
     }
-    const targetDimen = getDimen(targetItem);
-    console.log(targetDimen);
+    const targetDimen = Dimen.from(targetItem);
+    if (!this.draggingStart || !this.draggingDimen) {
+      return;
+    }
+    const currentX = this.draggingDimen.x + e.pageX - this.draggingStart.x;
+    const currentY = this.draggingDimen.y + e.pageY - this.draggingStart.y;
+    const currentDimen = new Dimen(
+      currentX,
+      currentY,
+      this.draggingDimen.width,
+      this.draggingDimen.height,
+    );
+    if (this.axis === 'x') {
+      if (currentDimen.centerX > targetDimen.x + this.safeEdge) {
+        // dragging rightwards
+        console.log(this.draggingId, id);
+      }
+      if (currentDimen.centerX < targetDimen.x1 - this.safeEdge) {
+        // dragging leftwards
+        console.log(this.draggingId, id);
+      }
+    }
   };
 
   dragEnd = () => {
     this.draggingId = undefined;
-    this.draggingEl = undefined;
+    this.draggingStart = undefined;
+    this.draggingDimen = undefined;
   };
 }
 
