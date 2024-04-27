@@ -1,4 +1,4 @@
-import { type Component, For, Show, mergeProps } from 'solid-js';
+import { type Component, For, Show, mergeProps, onCleanup, onMount } from 'solid-js';
 import type { ITab } from '../typings';
 import DndManager, { type IDndManager } from '../utils/dnd';
 
@@ -7,16 +7,24 @@ type IProps = {
   activeTabId: number;
   onTabClick: (tab: ITab) => void;
   onTabClose: (tab: ITab) => void;
+  onTabSwap: (tabId1: number, tabId2: number) => void;
 };
-
-const dnd: IDndManager = new DndManager();
 
 const TabList = (props: {
   tabs: ITab[];
   activeTabId: number;
   onTabClick: (tab: ITab) => void;
   onTabClose: (tab: ITab) => void;
+  onTabSwap: (tabId1: number, tabId2: number) => void;
 }) => {
+  let dnd: IDndManager;
+
+  onMount(() => {
+    dnd = new DndManager();
+  });
+
+  onCleanup(() => {});
+
   const handleTabClose = (tab: ITab, e: MouseEvent) => {
     e.stopPropagation();
     props.onTabClose(tab);
@@ -88,6 +96,7 @@ const TabPane: Component<IProps> = (props) => {
         activeTabId={attrs.activeTabId}
         onTabClick={attrs.onTabClick}
         onTabClose={attrs.onTabClose}
+        onTabSwap={attrs.onTabSwap}
       />
       <TabArea tabs={attrs.tabs} activeTabId={attrs.activeTabId} />
     </div>

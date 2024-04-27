@@ -3,7 +3,7 @@ import { render } from 'solid-js/web';
 import { TermView } from '~common/constants/term';
 import TabPane from './components/tab-pane';
 import TerminalView from './components/terminal-view';
-import { addTab, removeTab, setActiveTabId, state } from './store';
+import { addTab, removeTab, setActiveTabId, state, swapTab } from './store';
 
 const App = () => {
   onMount(() => {
@@ -32,6 +32,7 @@ const App = () => {
         activeTabId={state.activeTabId ?? 0}
         onTabClick={(tab) => setActiveTabId(tab.id)}
         onTabClose={(tab) => removeTab(tab.id)}
+        onTabSwap={swapTab}
       />
       <div onClick={handleAddTab} onKeyPress={handleAddTabByKeyPress}>
         Add +

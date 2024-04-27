@@ -65,4 +65,16 @@ const removeTab = (tabId: number) => {
   );
 };
 
-export { state, setActiveTabId, addTab, removeTab };
+const swapTab = (tabId1: number, tabId2: number) => {
+  setState(
+    produce((state) => {
+      const index1 = state.tabs.findIndex((tab) => tab.id === tabId1);
+      const index2 = state.tabs.findIndex((tab) => tab.id === tabId2);
+      const temp = state.tabs[index1];
+      state.tabs[index1] = state.tabs[index2];
+      state.tabs[index2] = temp;
+    }),
+  );
+};
+
+export { state, setActiveTabId, addTab, removeTab, swapTab };
