@@ -1,6 +1,6 @@
 import { type Component, For, Show, mergeProps } from 'solid-js';
 import type { ITab } from '../typings';
-import DndManager from '../utils/dnd';
+import DndManager, { type IDndManager } from '../utils/dnd';
 
 type IProps = {
   tabs: ITab[];
@@ -9,7 +9,7 @@ type IProps = {
   onTabClose: (tab: ITab) => void;
 };
 
-const dnd = new DndManager();
+const dnd: IDndManager = new DndManager();
 
 const TabList = (props: {
   tabs: ITab[];
