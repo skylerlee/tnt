@@ -6,7 +6,7 @@ export interface IDndManager {
 }
 
 export interface IDndListener {
-  onSwap(id1: number, id2: number): void;
+  onSwap(srcId: number, tgtId: number): void;
 }
 
 interface IPoint {

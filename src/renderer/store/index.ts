@@ -65,14 +65,17 @@ const removeTab = (tabId: number) => {
   );
 };
 
-const swapTab = (tabId1: number, tabId2: number) => {
+const swapTab = (srcId: number, tgtId: number) => {
   setState(
     produce((state) => {
-      const index1 = state.tabs.findIndex((tab) => tab.id === tabId1);
-      const index2 = state.tabs.findIndex((tab) => tab.id === tabId2);
-      const temp = state.tabs[index1];
-      state.tabs[index1] = state.tabs[index2];
-      state.tabs[index2] = temp;
+      const srcIdx = state.tabs.findIndex((tab) => tab.id === srcId);
+      const tgtIdx = state.tabs.findIndex((tab) => tab.id === tgtId);
+      const [srcTab] = state.tabs.splice(srcIdx, 1);
+      if (srcIdx < tgtIdx) {
+        state.tabs.splice(tgtIdx + 1, 0, srcTab);
+      } else if (srcIdx > tgtIdx) {
+        state.tabs.splice(tgtIdx, 0, srcTab);
+      }
     }),
   );
 };

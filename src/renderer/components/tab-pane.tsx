@@ -7,7 +7,7 @@ type IProps = {
   activeTabId: number;
   onTabClick: (tab: ITab) => void;
   onTabClose: (tab: ITab) => void;
-  onTabSwap: (tabId1: number, tabId2: number) => void;
+  onTabSwap: (srcId: number, tgtId: number) => void;
 };
 
 const TabList = (
