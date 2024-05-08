@@ -1,10 +1,10 @@
-import { type Component, For, Show, mergeProps, onMount } from 'solid-js';
+import { type Component, For, Show, createSignal, mergeProps, onMount } from 'solid-js';
 import type { ITab } from '../typings';
 import DndManager, { type IDndManager } from '../utils/dnd';
 
 type IProps = {
   tabs: ITab[];
-  activeTabId: number;
+  activeTabId?: number;
   onTabClick: (tab: ITab) => void;
   onTabClose: (tab: ITab) => void;
   onTabSwap: (srcId: number, tgtId: number) => void;
@@ -13,10 +13,13 @@ type IProps = {
 const TabList = (
   props: Pick<IProps, 'tabs' | 'activeTabId' | 'onTabClick' | 'onTabClose' | 'onTabSwap'>,
 ) => {
+  const [draggingTabId, setDraggingTabId] = createSignal<number | undefined>(undefined);
   let dnd: IDndManager;
 
   onMount(() => {
     dnd = new DndManager('x', {
+      onDragStart: (id) => setDraggingTabId(id),
+      onDragEnd: () => setDraggingTabId(undefined),
       onSwap: props.onTabSwap,
     });
   });
@@ -34,6 +37,7 @@ const TabList = (
             classList={{
               'tab flex items-center px-3 py-2 select-none bg-dark-300 c-light': true,
               'active !bg-dark-100': tab.id === props.activeTabId,
+              '!invisible': tab.id === draggingTabId(),
             }}
             onClick={[props.onTabClick, tab]}
             onKeyPress={() => {}}

@@ -29,7 +29,7 @@ const App = () => {
     <div class="app flex flex-col">
       <TabPane
         tabs={state.tabs}
-        activeTabId={state.activeTabId ?? 0}
+        activeTabId={state.activeTabId}
         onTabClick={(tab) => setActiveTabId(tab.id)}
         onTabClose={(tab) => removeTab(tab.id)}
         onTabSwap={swapTab}

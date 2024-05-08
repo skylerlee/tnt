@@ -6,6 +6,8 @@ export interface IDndManager {
 }
 
 export interface IDndListener {
+  onDragStart(id: number): void;
+  onDragEnd(id: number): void;
   onSwap(srcId: number, tgtId: number): void;
 }
 
@@ -91,6 +93,11 @@ class DndManager implements IDndManager {
   dragStart = (id: number, e: MouseEvent) => {
     this.draggingId = id;
     this.draggingDimen = Dimen.from(e.target as HTMLElement);
+    requestAnimationFrame(() => {
+      if (this.draggingId !== undefined) {
+        this.listener.onDragStart(this.draggingId);
+      }
+    });
   };
 
   dragOver = (id: number, e: MouseEvent) => {
@@ -131,9 +138,13 @@ class DndManager implements IDndManager {
   };
 
   dragEnd = () => {
+    const draggingId = this.draggingId;
     this.draggingId = undefined;
     this.draggingStart = undefined;
     this.draggingDimen = undefined;
+    if (draggingId !== undefined) {
+      this.listener.onDragEnd(draggingId);
+    }
   };
 }
 
