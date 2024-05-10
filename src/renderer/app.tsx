@@ -4,6 +4,7 @@ import { TermView } from '~common/constants/term';
 import TabPane from './components/tab-pane';
 import TerminalView from './components/terminal-view';
 import { addTab, removeTab, setActiveTabId, state, swapTab } from './store';
+import { uid } from './utils/uid';
 
 const App = () => {
   onMount(() => {
@@ -19,8 +20,8 @@ const App = () => {
   });
 
   const handleAddTab = () => {
-    const id = Date.now();
-    addTab({ id, title: 'Hello world', render: () => <TerminalView id={id} /> });
+    const id = uid();
+    addTab({ id, title: `Hello world ${id}`, render: () => <TerminalView id={id} /> });
   };
 
   const handleAddTabByKeyPress = () => {};

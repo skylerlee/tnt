@@ -1,5 +1,5 @@
 const POOL_SIZE_MULTIPLIER = 128;
-const ID_SIZE = 21;
+const ID_SIZE = 4;
 
 const pool = new Uint8Array(ID_SIZE * POOL_SIZE_MULTIPLIER);
 let poolOffset = 0;
@@ -20,5 +20,5 @@ export function uid() {
   for (let i = poolOffset - ID_SIZE; i < poolOffset; i++) {
     id = (id << 8) + pool[i];
   }
-  return id;
+  return id & 0x7fffffff;
 }
