@@ -1657,6 +1657,13 @@
   resolved "https://registry.npmmirror.com/@vscode/codicons/-/codicons-0.0.35.tgz#7424a647f39c6e71c86c1edf12bfc27196c8fba1"
   integrity sha512-7iiKdA5wHVYSbO7/Mm0hiHD3i4h+9hKUe1O4hISAe/nHhagMwb2ZbFC8jU6d7Cw+JNT2dWXN2j+WHbkhT5/l2w==
 
+"@vscode/windows-process-tree@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.npmmirror.com/@vscode/windows-process-tree/-/windows-process-tree-0.6.0.tgz#a62400c689b27688fd689e8cac71d63c6d1956da"
+  integrity sha512-7/DjBKKUtlmKNiAet2GRbdvfjgMKmfBeWVClIgONv8aqxGnaKca5N85eIDxh6rLMy2hKvFqIIsqgxs1Q26TWwg==
+  dependencies:
+    node-addon-api "7.1.0"
+
 "@xterm/addon-fit@^0.10.0":
   version "0.10.0"
   resolved "https://registry.npmmirror.com/@xterm/addon-fit/-/addon-fit-0.10.0.tgz#bebf87fadd74e3af30fdcdeef47030e2592c6f55"
@@ -3270,15 +3277,15 @@ node-abi@^3.45.0:
   dependencies:
     semver "^7.3.5"
 
+node-addon-api@7.1.0, node-addon-api@^7.0.0:
+  version "7.1.0"
+  resolved "https://registry.npmmirror.com/node-addon-api/-/node-addon-api-7.1.0.tgz#71f609369379c08e251c558527a107107b5e0fdb"
+  integrity sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==
+
 node-addon-api@^6.1.0:
   version "6.1.0"
   resolved "https://registry.npmmirror.com/node-addon-api/-/node-addon-api-6.1.0.tgz#ac8470034e58e67d0c6f1204a18ae6995d9c0d76"
   integrity sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==
-
-node-addon-api@^7.0.0:
-  version "7.1.0"
-  resolved "https://registry.npmmirror.com/node-addon-api/-/node-addon-api-7.1.0.tgz#71f609369379c08e251c558527a107107b5e0fdb"
-  integrity sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==
 
 node-api-version@^0.2.0:
   version "0.2.0"
