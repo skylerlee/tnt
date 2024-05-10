@@ -2,6 +2,7 @@ import { type IPty, spawn } from 'node-pty';
 import { Term } from '~common/constants';
 import type { IProfile, ITermSize } from '~common/typings';
 import type { IBroadcaster } from '~main/app';
+import { getPsTree } from '~main/ps/ps-tree';
 
 export interface IPtyManager {
   attach(id: number, profile: IProfile): void;
@@ -24,6 +25,11 @@ class PtyManager implements IPtyManager {
       cwd,
       cols: initialSize?.cols,
       rows: initialSize?.rows,
+    });
+    // get spawned process info
+    const { pid } = pty;
+    getPsTree(pid).then((info) => {
+      // this.broadcaster.broadcast(Term.Attach, id, info);
     });
     pty.onData((data) => {
       this.broadcaster.broadcast(Term.Read, id, data);
