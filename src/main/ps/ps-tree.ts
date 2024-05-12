@@ -1,3 +1,6 @@
+import * as childProcess from 'node:child_process';
+import { from, map } from 'rxjs';
+
 export interface IProcessInfo {
   pid: number;
   name: string;
@@ -14,7 +17,27 @@ export async function getPsTree(pid: number): Promise<IProcessInfo | undefined> 
       windowsProcessTree.getProcessTree(pid, resolve);
     });
   }
-  // Spawn and parse `ps` output on Unix/Darwin
+  // Spawn `ps` on Unix/Darwin
+  const cp = childProcess.spawn('ps', ['-A', '-o', 'ppid,pid,comm']);
+  from(cp.stdout)
+    .pipe(
+      // Parse `ps` output
+      map((chunk: Buffer) => {
+        const line = chunk.toString('utf-8');
+        return line;
+      }),
+    )
+    .subscribe({
+      next: (line: string) => {
+        console.log(':', line);
+      },
+      error: (err: Error) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.log('-- end --');
+      },
+    });
   return {
     pid,
     name: '?',

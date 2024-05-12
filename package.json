@@ -36,6 +36,7 @@
     "@xterm/xterm": "^5.5.0",
     "node-pty": "^1.0.0",
     "radash": "^12.1.0",
+    "rxjs": "^7.8.1",
     "solid-js": "^1.8.16"
   },
   "devDependencies": {
