@@ -1,5 +1,5 @@
 import * as childProcess from 'node:child_process';
-import { from, map } from 'rxjs';
+import { type ObservableInput, from, map } from 'rxjs';
 
 export interface IProcessInfo {
   pid: number;
@@ -19,19 +19,19 @@ export async function getPsTree(pid: number): Promise<IProcessInfo | undefined> 
   }
   // Spawn `ps` on Unix/Darwin
   const cp = childProcess.spawn('ps', ['-A', '-o', 'ppid,pid,comm']);
-  from(cp.stdout)
+  from(cp.stdout as ObservableInput<Buffer>)
     .pipe(
       // Parse `ps` output
-      map((chunk: Buffer) => {
+      map((chunk) => {
         const line = chunk.toString('utf-8');
         return line;
       }),
     )
     .subscribe({
-      next: (line: string) => {
+      next: (line) => {
         console.log(':', line);
       },
-      error: (err: Error) => {
+      error: (err) => {
         console.error(err);
       },
       complete: () => {
