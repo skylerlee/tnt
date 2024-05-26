@@ -45,7 +45,6 @@
     "@electron/asar": "^3.2.9",
     "@electron/rebuild": "^3.6.0",
     "@unocss/postcss": "^0.59.0",
-    "babel-preset-solid": "^1.8.16",
     "electron": "^25.9.8",
     "postcss": "^8.4.21",
     "unocss": "^0.59.0"
