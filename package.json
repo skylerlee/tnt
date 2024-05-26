@@ -23,7 +23,7 @@
     }
   },
   "scripts": {
-    "build": "parcel build",
+    "build": "vite build",
     "build:asar": "asar pack dist out/app.asar",
     "rebuild": "electron-rebuild",
     "start": "electron dist"
@@ -47,6 +47,8 @@
     "@unocss/postcss": "^0.59.0",
     "electron": "^25.9.8",
     "postcss": "^8.4.21",
-    "unocss": "^0.59.0"
+    "unocss": "^0.59.0",
+    "vite": "^5.2.11",
+    "vite-plugin-solid": "^2.10.2"
   }
 }
