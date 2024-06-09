@@ -1,4 +1,4 @@
-import type { IDisposable } from '~common/utils/disposable';
+import type { IDisposable } from '~common/utils/disposables';
 import type { IProfile } from './profile';
 import type { ITermSize } from './term';
 
