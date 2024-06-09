@@ -4,6 +4,7 @@ import electron from 'vite-plugin-electron/simple';
 import solid from 'vite-plugin-solid';
 
 const alias = [{ find: '~', replacement: path.resolve(__dirname, 'src') }];
+const external = ['node-pty', '@vscode/windows-process-tree'];
 
 export default defineConfig({
   plugins: [
@@ -13,8 +14,9 @@ export default defineConfig({
         vite: {
           resolve: { alias },
           build: {
+            outDir: 'dist/main',
             rollupOptions: {
-              external: ['electron', 'node-pty', '@vscode/windows-process-tree'],
+              external,
             },
           },
         },
@@ -23,12 +25,18 @@ export default defineConfig({
         input: 'src/preload/index.ts',
         vite: {
           resolve: { alias },
+          build: {
+            outDir: 'dist/preload',
+          },
         },
       },
     }),
     solid(),
   ],
   resolve: { alias },
+  build: {
+    outDir: 'dist/renderer',
+  },
   css: {
     postcss: {},
   },
