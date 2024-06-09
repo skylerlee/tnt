@@ -1,6 +1,6 @@
 import { type IpcRendererEvent, contextBridge, ipcRenderer } from 'electron';
-import { Term } from '~common/constants';
-import type { IIpcAPI, IProfile, ITermSize } from '~common/typings';
+import { Term } from '~/common/constants';
+import type { IIpcAPI, IProfile, ITermSize } from '~/common/typings';
 
 const ipcAPI: IIpcAPI = {
   openTerm(id: number, profile: IProfile): Promise<boolean> {

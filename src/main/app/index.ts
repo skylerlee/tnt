@@ -1,6 +1,6 @@
 import { type App, BrowserWindow, ipcMain } from 'electron';
-import { Term } from '~common/constants';
-import type { IProfile, ITermSize } from '~common/typings';
+import { Term } from '~/common/constants';
+import type { IProfile, ITermSize } from '~/common/typings';
 import PtyManager, { type IPtyManager } from '../pty/pty-manager';
 
 export interface IAppLifecycle {

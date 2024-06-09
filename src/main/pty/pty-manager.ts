@@ -1,8 +1,8 @@
 import { type IPty, spawn } from 'node-pty';
-import { Term } from '~common/constants';
-import type { IProfile, ITermSize } from '~common/typings';
-import type { IBroadcaster } from '~main/app';
-import { getPsTree } from '~main/ps/ps-tree';
+import { Term } from '~/common/constants';
+import type { IProfile, ITermSize } from '~/common/typings';
+import type { IBroadcaster } from '~/main/app';
+import { getPsTree } from '~/main/ps/ps-tree';
 
 export interface IPtyManager {
   attach(id: number, profile: IProfile): void;

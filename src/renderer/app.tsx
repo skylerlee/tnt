@@ -1,6 +1,6 @@
 import { onCleanup, onMount } from 'solid-js';
 import { render } from 'solid-js/web';
-import { TermView } from '~common/constants/term';
+import { TermView } from '~/common/constants/term';
 import TabPane from './components/tab-pane';
 import TerminalView from './components/terminal-view';
 import { addTab, removeTab, setActiveTabId, state, swapTab } from './store';

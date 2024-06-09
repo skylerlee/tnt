@@ -3,8 +3,8 @@ import { WebglAddon } from '@xterm/addon-webgl';
 import { Terminal } from '@xterm/xterm';
 import { throttle } from 'radash';
 import { type Component, onCleanup, onMount } from 'solid-js';
-import { TermView } from '~common/constants/term';
-import { Disposables } from '~common/utils/disposables';
+import { TermView } from '~/common/constants/term';
+import { Disposables } from '~/common/utils/disposables';
 
 type IProps = { id: number };
 
