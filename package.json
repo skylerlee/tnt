@@ -5,23 +5,6 @@
   "author": "skylerlee <skyler.ac.lee@gmail.com>",
   "license": "MIT",
   "private": true,
-  "targets": {
-    "main": {
-      "context": "electron-main",
-      "source": "src/main/index.ts"
-    },
-    "preload": {
-      "context": "electron-main",
-      "source": "src/preload/index.ts"
-    },
-    "renderer": {
-      "context": "electron-renderer",
-      "includeNodeModules": true,
-      "source": "src/renderer/index.html",
-      "distDir": "dist/renderer",
-      "publicUrl": "."
-    }
-  },
   "scripts": {
     "build": "vite build",
     "build:asar": "asar pack dist out/app.asar",
@@ -40,7 +23,6 @@
     "solid-js": "^1.8.16"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.0",
     "@biomejs/biome": "^1.6.3",
     "@electron/asar": "^3.2.9",
     "@electron/rebuild": "^3.6.0",
