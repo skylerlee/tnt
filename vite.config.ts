@@ -1,4 +1,5 @@
 import path from 'node:path';
+import unocss from 'unocss/vite';
 import { defineConfig } from 'vite';
 import electron from 'vite-plugin-electron/simple';
 import solid from 'vite-plugin-solid';
@@ -31,6 +32,7 @@ export default defineConfig({
         },
       },
     }),
+    unocss(),
     solid(),
   ],
   resolve: { alias },
