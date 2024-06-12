@@ -1,6 +1,10 @@
-@unocss;
 @import '@xterm/xterm/css/xterm.css';
 @import '@vscode/codicons/dist/codicon.css';
+
+:root {
+  --tnt-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+  --tnt-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
 
 html,
 body,
@@ -13,6 +17,7 @@ body,
 body {
   margin: 0;
   padding: 0;
+  font-family: var(--tnt-font-sans-serif);
   font-size: 14px;
 }
 

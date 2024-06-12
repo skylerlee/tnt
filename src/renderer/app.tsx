@@ -1,3 +1,4 @@
+import 'virtual:uno.css';
 import { onCleanup, onMount } from 'solid-js';
 import { render } from 'solid-js/web';
 import { TermView } from '~/common/constants/term';
