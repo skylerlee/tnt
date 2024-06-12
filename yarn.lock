@@ -1224,7 +1224,7 @@
   dependencies:
     "@unocss/core" "0.58.9"
 
-"@unocss/transformer-directives@0.58.9":
+"@unocss/transformer-directives@0.58.9", "@unocss/transformer-directives@^0.58.9":
   version "0.58.9"
   resolved "https://registry.npmmirror.com/@unocss/transformer-directives/-/transformer-directives-0.58.9.tgz#ca40556b205f33a04232c353dd3d605cb35ee279"
   integrity sha512-pLOUsdoY2ugVntJXg0xuGjO9XZ2xCiMxTPRtpZ4TsEzUtdEzMswR06Y8VWvNciTB/Zqxcz9ta8rD0DKePOfSuw==
