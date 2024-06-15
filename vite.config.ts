@@ -3,6 +3,7 @@ import unocss from 'unocss/vite';
 import { defineConfig } from 'vite';
 import electron from 'vite-plugin-electron/simple';
 import solid from 'vite-plugin-solid';
+import { viteStaticCopy as staticCopy } from 'vite-plugin-static-copy';
 
 const alias = [{ find: '~', replacement: path.resolve(__dirname, 'src') }];
 const external = ['node-pty', '@vscode/windows-process-tree'];
@@ -34,6 +35,15 @@ export default defineConfig({
     }),
     unocss(),
     solid(),
+    staticCopy({
+      targets: [
+        {
+          src: 'package.json.in',
+          dest: '..',
+          rename: 'package.json',
+        },
+      ],
+    }),
   ],
   resolve: { alias },
   build: {
